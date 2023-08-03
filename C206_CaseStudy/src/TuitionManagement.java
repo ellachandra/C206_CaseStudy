@@ -16,14 +16,20 @@ public class TuitionManagement {
 	private static final int ADMIN_OPTION_COURSE = 2;// jia an
 	private static final int ADMIN_OPTION_STUDENT = 3;// jia an
 	private static final int ADMIN_OPTION_FEE = 4;// jia an
-	private static final int ADMIN_ITEM_TYPE_ENROLMENT = 5;// jia an
-	private static final int ADMIN_ITEM_TYPE_ATTENDANCE = 6; // jia an
+	private static final int ADMIN_OPTION_ENROLMENT = 5;// jia an
+	private static final int ADMIN_OPTION_ATTENDANCE = 6; // jia an
 	
 	
 	private static final int ADMIN_LOGIN = 1; // jia an
 	private static final int STUDENT_LOGIN= 2; // jia an
 	private static final int TEACHER_LOGIN = 3; // jia an
 	private static final int NO_LOGIN = 4; // jia an
+	
+	private static final int ADMIN_COURSE_ADD = 1; // jia an
+	private static final int ADMIN_COURSE_VIEW = 2; // jia an
+	private static final int ADMIN_COURSE_DELETE = 3; // jia an
+	private static final int ADMIN_COURSE_UPDATE = 4; // jia an
+	private static final int ADMIN_COURSE_QUIT = 5; // jia an
 
 
 
@@ -81,18 +87,78 @@ public class TuitionManagement {
 					TuitionManagement.adminmenu();
 					optionA = Helper.readInt("Enter an option > ");
 					
-					
+					if(optionA == ADMIN_OPTION_USER ) {
+						//code for user
+					}
+					else if(optionA == ADMIN_OPTION_COURSE) {
+						//code for course
+						int optionC = 0;
+						while(optionC != ADMIN_COURSE_QUIT) {
+						TuitionManagement.courseTypeMenu();
+						optionC = Helper.readInt("Enter an option > ");
+						
+						if(optionC == ADMIN_COURSE_ADD) {
+							TuitionManagement.setHeader("ADD A NEW COURSE");
+							boolean added = false;
+							String courseId = Helper.readString("Enter Course ID:");
+				            String courseName = Helper.readString("Enter Course Name:");
+				            String courseDescription = Helper.readString("Enter Course Description:");
+				            String schedule = Helper.readString("Enter Course Schedule:");
+
+				            // Create a new Course object with user input
+				            Course newCourse = new Course(courseId, courseName, courseDescription, schedule);
+
+				            // Add the new course to the ArrayList
+				            courseList.add(newCourse);
+
+				            // Print a success message
+				            System.out.println("Course added successfully!");
+							
+						}else if(optionC == ADMIN_COURSE_VIEW) {
+							TuitionManagement.setHeader("VIEW ALL COURSE");
+							 System.out.println("ALL COURSES:");
+					            System.out.println("------------------------------------------------------------");
+					            System.out.println("Course ID\tCourse Name\t\tDescription\t\t\tSchedule");
+					            System.out.println("------------------------------------------------------------");
+					            for (Course course : courseList) {
+					                String courseId = course.getCourseCode();
+					                String courseName = course.getCourseTitle();
+					                String courseDescription = course.getCourseDesc();
+					                String schedule = course.getSchedule();
+
+					                System.out.printf("%-10s\t%-20s\t%-30s\t%-20s%n", courseId, courseName, courseDescription, schedule);
+					            }
+					            System.out.println("------------------------------------------------------------");
+					        }
+					    }
+							
+						}
+					else if (optionA == ADMIN_OPTION_STUDENT) {
+						//code for Student Management
+						
+						}
+					else if (optionA == ADMIN_OPTION_FEE) {
+						//code for Fee Management
+					}
+					else if (optionA == ADMIN_OPTION_ENROLMENT) {
+						//code for Enrolmant Management
+					}
+					else if(optionA == ADMIN_OPTION_ATTENDANCE) {
+						//code for Attendance
+					}
 					
 					}
 					
 				}
 				
 
-			} 
+			
+			
+			}
 			else if (option == STUDENT_LOGIN) {
 				//Code for login Student
 			}
-		}
+			}
 	
 	
 	
@@ -138,6 +204,8 @@ public class TuitionManagement {
 		System.out.println("1. Add a new Course");
 		System.out.println("2. View all Courses");
 		System.out.println("3. Delete an existing Course");
+		System.out.println("4. Update an existing Course");
+		System.out.println("5. Quit ");
 		
 	}
 	public static void userTypeMenu() { 
