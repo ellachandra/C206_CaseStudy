@@ -76,7 +76,13 @@ public class TuitionManagement {
 		System.out.println("3. Delete an existing Course");
 		
 	}
-
+	public static void userTypeMenu() { 
+		TuitionManagement.setHeader("USER MANAGEMENT");
+		System.out.println("1. Add a new user");
+		System.out.println("2. View all user");
+		System.out.println("3. Delete an existing user");
+		
+	}
 	
 
 	}
