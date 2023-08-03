@@ -99,7 +99,7 @@ public class TuitionManagement {
 						
 						if(optionC == ADMIN_COURSE_ADD) {
 							TuitionManagement.setHeader("ADD A NEW COURSE");
-							boolean added = false;
+							
 							String courseId = Helper.readString("Enter Course ID:");
 				            String courseName = Helper.readString("Enter Course Name:");
 				            String courseDescription = Helper.readString("Enter Course Description:");
@@ -117,9 +117,9 @@ public class TuitionManagement {
 						}else if(optionC == ADMIN_COURSE_VIEW) {
 							TuitionManagement.setHeader("VIEW ALL COURSE");
 							 System.out.println("ALL COURSES:");
-					            System.out.println("------------------------------------------------------------");
-					            System.out.println("Course ID\tCourse Name\t\tDescription\t\t\tSchedule");
-					            System.out.println("------------------------------------------------------------");
+							 Helper.line(120, "-");
+					            System.out.println("Course Course\tCourse Name\t\tDescription\t\t\tSchedule");
+					            Helper.line(120, "-");
 					            for (Course course : courseList) {
 					                String courseId = course.getCourseCode();
 					                String courseName = course.getCourseTitle();
@@ -128,8 +128,30 @@ public class TuitionManagement {
 
 					                System.out.printf("%-10s\t%-20s\t%-30s\t%-20s%n", courseId, courseName, courseDescription, schedule);
 					            }
-					            System.out.println("------------------------------------------------------------");
-					        }
+					            Helper.line(120, "-");
+						}
+						else if(optionC == ADMIN_COURSE_DELETE) {
+							TuitionManagement.setHeader("VIEW ALL COURSE");
+							 String courseIdToDelete = Helper.readString("Enter the Course ID to delete:");
+
+					            // Delete the course with the given course ID
+					            boolean courseDeleted = false;
+					            for (int i = 0; i < courseList.size(); i++) {
+					                Course course = courseList.get(i);
+					                if (course.getCourseCode().equals(courseIdToDelete)) {
+					                    courseList.remove(i);
+					                    courseDeleted = true;
+					                    break;
+					                }
+					            }
+
+					            // Print the result of the delete operation
+					            if (courseDeleted) {
+					                System.out.println("Course with ID " + courseIdToDelete + " has been deleted.");
+					            } else {
+					                System.out.println("Course with ID " + courseIdToDelete + " not found.");
+					            }
+						}
 					    }
 							
 						}
@@ -158,7 +180,11 @@ public class TuitionManagement {
 			else if (option == STUDENT_LOGIN) {
 				//Code for login Student
 			}
+			else{
+				System.out.println("Thank you for visiting Saint Tuition Management!");
 			}
+			}
+			
 	
 	
 	
@@ -206,6 +232,7 @@ public class TuitionManagement {
 		System.out.println("3. Delete an existing Course");
 		System.out.println("4. Update an existing Course");
 		System.out.println("5. Quit ");
+		Helper.line(80, "-");
 		
 	}
 	public static void userTypeMenu() { 
@@ -213,6 +240,7 @@ public class TuitionManagement {
 		System.out.println("1. Add a new user");
 		System.out.println("2. View all user");
 		System.out.println("3. Delete an existing user");
+		Helper.line(80, "-");
 		
 	}
 	
