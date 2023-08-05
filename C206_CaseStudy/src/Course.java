@@ -10,7 +10,7 @@ public class Course {
 	private String courseCode;
 	private String courseTitle;
 	private String courseDesc;
-	private String courseEligibil; //ella - add eligibility
+	private String courseEligibil; //ella - added eligibility
 	private String schedule;
 	
 	public Course(String courseCode, String courseTitle, String courseDesc, String courseEligibil, String schedule) {

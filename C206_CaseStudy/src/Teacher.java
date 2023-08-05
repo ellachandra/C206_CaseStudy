@@ -6,7 +6,7 @@
  * @author 22000153
  *
  */
-//ella added number to user
+//ella added number to users
 public class Teacher extends User {
 	
 	public Teacher(String userId, String password, String name, int number, String email) {

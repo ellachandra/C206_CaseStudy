@@ -11,7 +11,7 @@ import java.util.List;
  *
  */
 
-//ella has edited add, view and delete user
+//ella has edited add, view and delete users
 public class TuitionManagement {
 	private static final int ADMIN_OPTION_QUIT = 7;// jia an
 	private static final int ADMIN_OPTION_USER = 1;// jia an

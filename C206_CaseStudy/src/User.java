@@ -7,7 +7,7 @@
  *
  */
 
-//edited by ella add number
+//edited by ella add contact number
 public class User {
 	private String userId;
 	private String password;
