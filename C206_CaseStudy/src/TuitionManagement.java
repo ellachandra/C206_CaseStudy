@@ -42,7 +42,15 @@ public class TuitionManagement {
 	private static final int ADMIN_STUDENT_VIEW = 2; // weile
 	private static final int ADMIN_STUDENT_DELETE = 3; // weile
 	private static final int ADMIN_STUDENT_QUIT = 4; // weile
+	
+	private static final int ADMIN_ATTENDANCE_ADD = 1; // ella
+	private static final int ADMIN_ATTENDANCE_VIEW = 2; // ella
+	private static final int ADMIN_ATTENDANCE_DELETE = 3; // ella
+	private static final int ADMIN_ATTENDANCE_QUIT = 4; // ella
+	
 
+	
+	
 	/**
 	 * @param args
 	 */
@@ -68,7 +76,32 @@ public class TuitionManagement {
 		Course c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "Requires CS101", "Tue, Thur 11:00 AM - 12:30 PM");
 		courseList.add(c1);
 		courseList.add(c2);//ella
-	
+		
+		// Find a student by their ID
+		Student student1 = findStudentById(students, "student1");
+		Student student2 = findStudentById(students, "student2");
+
+		// Mark attendance for student1 in course c1
+		student1.markAttendance(c1.getCourseCode(), true, "1");
+		student1.markAttendance(c1.getCourseCode(), false, "2");
+		student1.markAttendance(c1.getCourseCode(), true, "3");
+
+		// Mark attendance for student1 in course c2
+		student1.markAttendance(c2.getCourseCode(), true, "1");
+		student1.markAttendance(c2.getCourseCode(), true, "2");
+		student1.markAttendance(c2.getCourseCode(), true, "3");
+
+		// Mark attendance for student2 in course c1
+		student2.markAttendance(c1.getCourseCode(), true, "1");
+		student2.markAttendance(c1.getCourseCode(), true, "2");
+		student2.markAttendance(c1.getCourseCode(), false, "3");
+
+		// Mark attendance for student2 in course c2
+		student2.markAttendance(c2.getCourseCode(), true, "1");
+		student2.markAttendance(c2.getCourseCode(), false, "2");
+		student2.markAttendance(c2.getCourseCode(), true, "3");
+		
+		
 	
 			int option = 0;
 
@@ -306,22 +339,89 @@ public class TuitionManagement {
 						else if (optionA == ADMIN_OPTION_ENROLMENT) {
 							//code for Enrolmant Management
 						}
-						else if(optionA == ADMIN_OPTION_ATTENDANCE) {
+						else if(optionA == ADMIN_OPTION_ATTENDANCE) { //ella
 							//code for Attendance
-						}
+							int choice = 0;
+							while (choice != ADMIN_ATTENDANCE_QUIT) {
+								TuitionManagement.attendanceTypeMenu();
+								choice = Helper.readInt("Enter an option > ");
+								
+								if (choice == ADMIN_ATTENDANCE_ADD) {
+									TuitionManagement.setHeader("ADD ATTENDANCE");
+									
+									String studentId = Helper.readString("Enter Student ID: ");
+								    Student student = findStudentById(students, studentId);
+
+								    if (student != null) {
+								        String courseCode = Helper.readString("Enter Course Code: ");
+								        int numOfLessons = Helper.readInt("Enter the number of lessons: ");
+
+								        for (int i = 1; i <= numOfLessons; i++) {
+								            String lessonNo = Helper.readString("Enter lesson number for Lesson " + i + ": ");
+								            boolean isPresent = Helper.readBoolean("Is the student present for Lesson " + i + "? (true/false): ");
+
+								            student.markAttendance(courseCode, isPresent, lessonNo);
+								        }
+
+								        System.out.println("Attendance marked successfully!");
+								    } else {
+								        System.out.println("Student not found!");
+								    }
+								    
+								} else if (choice == ADMIN_ATTENDANCE_VIEW) {
+									 TuitionManagement.setHeader("VIEW ALL ATTENDANCE");
+									    String studentId = Helper.readString("Enter Student ID: ");
+									    Student student = findStudentById(students, studentId);
+
+									    if (student != null) {
+									        System.out.println("ATTENDANCE RECORDS:");
+									        Helper.line(120, "-");
+									        System.out.println("Course Code\tLesson No.\tIs Present");
+									        Helper.line(120, "-");
+
+									        for (Student.Attendance attendance : student.getAttendanceRecords()) {
+									            String courseCode = attendance.getCourseCode();
+									            String lessonNo = attendance.getLessonNo();
+									            boolean isPresent = attendance.isPresent();
+
+									            System.out.printf("%-20s\t%-10s\t%-10s%n", courseCode, lessonNo, isPresent);
+									        }
+									        Helper.line(120, "-");
+									    } else {
+									        System.out.println("Student Not Found!");
+									    }
+										
+								} else if (choice == ADMIN_ATTENDANCE_DELETE) { //deletes lesson by lesson
+				                    TuitionManagement.setHeader("DELETE STUDENT ATTENDANCE");
+				                    String studentId = Helper.readString("Enter Student ID: ");
+				                    Student student = findStudentById(students, studentId);
+
+				                    if (student != null) {
+				                        String courseCode = Helper.readString("Enter Course Code: ");
+				                        student.deleteAttendance(courseCode);
+				                        System.out.println("Attendance for student " + studentId + " in course " + courseCode + " has been deleted.");
+				                        
+				                    } else {
+				                        System.out.println("Student not found!");
+				                    }
 					
-						}
+								}	
 					
-					}
+							}
+						}
 				
 			
-				}
+				
 				else if (option == STUDENT_LOGIN) {
 					//Code for login Student
 				}
 				else{
 					System.out.println("Thank you for visiting Saint Tuition Management!");
 				}
+			
+				}
+				}
+			}
 			}
 			
 	
@@ -388,6 +488,25 @@ public class TuitionManagement {
 		Helper.line(80, "-");
 		
 	}
+	
+	public static void attendanceTypeMenu() {
+		TuitionManagement.setHeader("ATTENDANCE MANAGEMENT");
+		System.out.println("1. Add a new Attendance");
+		System.out.println("2. View all Attendance");
+		System.out.println("3. Delete a students Attendance");
+		System.out.println("4. Quit");
+		Helper.line(80, "-");
+	}
+	
+	public static Student findStudentById(List<Student> students, String studentId) {
+	    for (Student student : students) {
+	        if (student.getUserId().equals(studentId)) {
+	            return student;
+	        }
+	    }
+	    return null; // Return null if student is not found
+	}
+	
 	
 
 	}
