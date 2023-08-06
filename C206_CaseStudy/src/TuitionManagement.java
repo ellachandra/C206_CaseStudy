@@ -37,6 +37,11 @@ public class TuitionManagement {
 	private static final int ADMIN_USER_VIEW = 2; // ella
 	private static final int ADMIN_USER_DELETE = 3; // ella
 	private static final int ADMIN_USER_QUIT = 4; // ella
+	
+	private static final int ADMIN_STUDENT_ADD = 1; // weile
+	private static final int ADMIN_STUDENT_VIEW = 2; // weile
+	private static final int ADMIN_STUDENT_DELETE = 3; // weile
+	private static final int ADMIN_STUDENT_QUIT = 4; // weile
 
 	/**
 	 * @param args
@@ -51,6 +56,12 @@ public class TuitionManagement {
         administrators.add(new Administrator("admin3", "admin789", "Administrator 3", 93344556, "admin3@example.com"));
         administrators.add(new Administrator("admin4", "adminabc", "Administrator 4", 94455667, "admin4@example.com"));
 
+        ArrayList<Student> students = new ArrayList<>();
+        students.add(new Student("student1", "student123", "Student 1", 81122334, "student1@example.com"));
+        students.add(new Student("student2", "student456", "Student 2", 81222334, "student2@example.com"));
+        students.add(new Student("student3", "student789", "Student 3", 81322334, "student3@example.com"));
+        students.add(new Student("student4", "studentabc", "Student 4", 81422334, "student4@example.com"));
+        
 		ArrayList<Course> courseList = new ArrayList<Course>();
 		Course c1 = new Course("CS101", "Java Corp", "The Journey of Java", "", "Mon, Wed 10:00 AM - 11:30 AM");
 		//added 1 more course to show eligibility example - ella
@@ -71,7 +82,7 @@ public class TuitionManagement {
 				// Code to Login for admin
 				boolean loginSuccessful = false;
 				String inputUserId = Helper.readString("Enter your userID: ");
-                String inputPassword = Helper.readString("Enter your password: ");
+                 String inputPassword = Helper.readString("Enter your password: ");
 				
 				for(Administrator admin: administrators) {
 					
@@ -222,8 +233,71 @@ public class TuitionManagement {
 							}
 							
 							}
-						else if (optionA == ADMIN_OPTION_STUDENT) {
+						else if (optionA == ADMIN_OPTION_STUDENT) { //Wei Le
 							//code for Student Management
+							int optionD = 0;
+							while(optionD != ADMIN_STUDENT_QUIT) {
+									TuitionManagement.studentTypeMenu();
+									optionD = Helper.readInt("Enter an option > ");
+						
+									if(optionD == ADMIN_STUDENT_ADD) {
+										TuitionManagement.setHeader("ADD A NEW STUDENT");
+							
+										String studentID = Helper.readString("Enter User ID: ");
+										String studentPassword = Helper.readString("Enter a password: ");
+										String studentName = Helper.readString("Enter User Name: ");
+										int studentNumber = Helper.readInt("Enter User Contact Number: ");
+										String studentEmail = Helper.readString("Enter User Email: ");
+										
+
+										// Create a new Student object with user input
+										Student newStudent = new Student(studentID, studentPassword, studentName, studentNumber, studentEmail);
+
+										// Add the new student to the ArrayList
+										students.add(newStudent);
+
+										// Print a success message
+										System.out.println("Student added successfully!");
+							
+									}else if(optionD == ADMIN_STUDENT_VIEW) {
+										TuitionManagement.setHeader("VIEW ALL STUDENT");
+										System.out.println("ALL STUDENTS:");
+										Helper.line(120, "-");
+										System.out.println(String.format("%-10s %20s %20s %20s\n", "STUDENT ID", "STUDENT NAME", "STUDENT NUMBER", "STUDENT EMAIL")); //need to add eligibility
+										Helper.line(120, "-");
+										for (Student student : students) {
+											String studentId = student.getUserId();
+											String studentName = student.getName();
+											//add eligibility
+											int studentNumber = student.getNumber();
+											String studentEmail = student.getEmail();
+
+											System.out.printf("%-10s\t%-20s\t%-30s\t%-20s%n", studentId, studentName, studentNumber, studentEmail);
+										}
+										Helper.line(120, "-");
+									}
+									else if(optionD == ADMIN_COURSE_DELETE) {
+										TuitionManagement.setHeader("DELETE EXISTING USER");
+										String deleteUser = Helper.readString("Enter studentID to delete: ");
+										
+										boolean deleted = false;
+										for (int i = 0; i < students.size(); i++) {
+											Student s = students.get(i);
+											if (s.getUserId().equals(deleteUser)) { //check against list
+												students.remove(i); //remove from list
+												deleted = true;
+												break;
+											}
+										}
+
+										// Print the result of the delete operation
+										if (deleted) {
+											System.out.println("Course with ID " + deleteUser + " has been deleted.");
+										} else {
+											System.out.println("Course with ID " + deleteUser + " not found.");
+										}
+									}
+							}
 						
 						}
 						else if (optionA == ADMIN_OPTION_FEE) {
@@ -301,6 +375,15 @@ public class TuitionManagement {
 		System.out.println("1. Add a new user");
 		System.out.println("2. View all user");
 		System.out.println("3. Delete an existing user");
+		System.out.println("4. Quit");
+		Helper.line(80, "-");
+		
+	}
+	public static void studentTypeMenu() { 
+		TuitionManagement.setHeader("STUDENT MANAGEMENT");
+		System.out.println("1. Add a new Student");
+		System.out.println("2. View all Students");
+		System.out.println("3. Delete an existing Student");
 		System.out.println("4. Quit");
 		Helper.line(80, "-");
 		
