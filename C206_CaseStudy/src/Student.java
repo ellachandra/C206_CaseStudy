@@ -10,9 +10,6 @@ public class Student extends User{
         this.attendanceRecords = new ArrayList<>();
     }
 	
-
-	
-	
 	
 	// all for attendance - ella
 	public void markAttendance(String courseCode, boolean isPresent, String lessonNo) {

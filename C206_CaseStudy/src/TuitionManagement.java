@@ -148,31 +148,15 @@ public class TuitionManagement {
 								if (choice == ADMIN_USER_ADD) { //add user
 									TuitionManagement.setHeader("ADD NEW USER");
 									
-									String userID = Helper.readString("Enter User ID: ");
-									String userPassword = Helper.readString("Enter a password: ");
-									String userName = Helper.readString("Enter User Name: ");
-									int userNumber = Helper.readInt("Enter User Contact Number: ");
-									String userEmail = Helper.readString("Enter User Email: ");
-									
-									//add to ArrayList
-									administrators.add(new Administrator(userID, userPassword, userName, userNumber, userEmail));
+									//Add a user
+									Administrator ad = inputUser();
+									TuitionManagement.addAdministrator(administrators, ad);
 									//print success message
 									System.out.println("User added successfully!");
 									
 								} else if (choice == ADMIN_USER_VIEW) { //view all users
-									TuitionManagement.setHeader("VIEW ALL USERS");
+									TuitionManagement.viewAllUsers(administrators);
 									
-									System.out.printf("%-10s %20s %20s %20s", "USER ID", "USER NAME", "USER NUMBER", "USER EMAIL\n");
-									Helper.line(120, "-");
-									
-									for ( Administrator a : administrators ) {
-										String userID = a.getUserId();
-										String userName = a.getUserId();
-										int userNumber = a.getNumber();
-										String userEmail = a.getEmail();
-										
-										System.out.printf("%-10s %17s %20d %30s\n", userID, userName, userNumber, userEmail);
-									}
 									
 									
 								} else if (choice == ADMIN_USER_DELETE) { //delete all users
@@ -431,6 +415,9 @@ public class TuitionManagement {
 
 		}
 	
+	
+	//================================ OTHER METHODS =======================================================
+	
 	 public static void adminmenu() {
 			TuitionManagement.setHeader("Tuition Management App");
 			System.out.println("1. User Management");
@@ -507,8 +494,51 @@ public class TuitionManagement {
 	    return null; // Return null if student is not found
 	}
 	
+	public static Administrator inputUser() {
+		
+		String userID = Helper.readString("Enter User ID: ");
+		String userPassword = Helper.readString("Enter a password: ");
+		String userName = Helper.readString("Enter User Name: ");
+		int userNumber = Helper.readInt("Enter User Contact Number: ");
+		String userEmail = Helper.readString("Enter User Email: ");
+
+		Administrator ad= new Administrator(userID, userPassword, userName, userNumber, userEmail);
+		return ad;
+		
+	}
+	
+	public static void addAdministrator(ArrayList<Administrator> administrators, Administrator ad) {
+		Administrator user;
+		for(int i = 0; i < administrators.size(); i++) {
+			user = administrators.get(i);
+			if (user.getUserId().equalsIgnoreCase(ad.getUserId()) )
+				return;
+		}
+		if ((ad.getUserId().isEmpty()) || (ad.getEmail().isEmpty()) ) {
+			return;
+		}
+		administrators.add(ad);
+		
+	}
+	
+	public static String retrieveUser(ArrayList<Administrator> administrators) {
+		String output = "";
+			for (int i = 0; i < administrators.size(); i++) {
+			      output += String.format("%-84s\n", administrators.get(i).toString());
+		}
+		return output;
+	}
+	
+	public static void viewAllUsers(ArrayList<Administrator> administrators) {
+		TuitionManagement.setHeader("VIEW ALL USERS");
+		String output = String.format("%-10s %20s %20s %20s\n", "USER ID", "USER NAME", "USER NUMBER", "USER EMAIL");
+		output += retrieveUser(administrators);	
+		System.out.println(output);
+	}
+	
+	
 	
 
-	}
+	}//end of all code
 
 
