@@ -8,5 +8,14 @@ public class Enrolment {
 		this.studentName = studentName;
 		this.courseCode = courseCode;
 	}
+
+	public String getStudentName() {
+		return studentName;
+	}
+
+	public String getCourseCode() {
+		return courseCode;
+	}
+	
 	
 }
