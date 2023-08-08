@@ -50,7 +50,7 @@ public class C206_CaseStudyTest {
 	//test add user(administrator) 
 	public void testAddUser() {
 		// Item list is not null, so that can add a new item - boundary
-		assertNotNull("Check if there is a valid User arraylist to add to", administrators);
+		assertNotNull("Check if there is a valid User arraylist to add to", students);
 		//Given an empty list, after adding 1 item, the size of the list is 1 - normal
 		//The item just added is as the same as the first item of the list
 		TuitionManagement.addAdministrator(administrators, a1);
@@ -66,7 +66,18 @@ public class C206_CaseStudyTest {
 	
 	@Test
 	public void testAddStudent() {
+		// Item list is not null, so that can add a new item - boundary
+		assertNotNull("Check if there is a valid User arraylist to add to", administrators);
+		//Given an empty list, after adding 1 item, the size of the list is 1 - normal
+		//The item just added is as the same as the first item of the list
+		TuitionManagement.addStudent(students, s1);
+		assertEquals("Check that students arrayList size is 1,", 1, students.size());
+		assertSame("Check that Student is added,", s1, students.get(0));
 		
+		//Add another item. test The size of the list is 2? -normal
+		//The item just added is as same as the second item of the list
+		TuitionManagement.addStudent(students, s2);
+		assertEquals("Test that Student is added,", s2, students.get(1));
 	}
 	
 	@Test
@@ -104,7 +115,26 @@ public class C206_CaseStudyTest {
 	
 	@Test
 	public void testRetrieveStudent() {
-		
+		// Test if Item list is not null but empty -boundary
+				assertNotNull("Test if there is valid Student arraylist to retrieve the item", students);
+				
+				//test if the list of student retrieved from the SourceCentre is empty - boundary
+				String allStudent = TuitionManagement.retrieveStudent(students);
+				String testOutput = "";
+				// Test if the output is empty
+				assertEquals("Test that nothing is displayed", testOutput, allStudent);
+				
+				//Given an empty list, after adding 2 items, test if the size of the list is 2 - normal
+				TuitionManagement.addStudent(students, s1);
+				TuitionManagement.addStudent(students, s2);
+				assertEquals("Test that Student arraylist size is 2", 2, students.size());
+				
+				//test if the expected output string same as the list of Student retrieved from the SourceCentre	
+				allStudent = TuitionManagement.retrieveStudent(students);
+				testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student1", "Student 1", 81122334, "student1@example.com");
+				testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student2", "Student 2", 81222334, "student2@example.com");
+				
+				assertEquals("Test that ViewStudent list", testOutput, allStudent);
 	}
 	
 	@Test
@@ -124,7 +154,32 @@ public class C206_CaseStudyTest {
 	
 	@Test
 	public void testDeleteStudent() {
+		// Test if Item list is not null but empty -boundary
+		assertNotNull("Test if there is valid Student arraylist to delete a student", students);
 		
+		//test if the list of student retrieved from the SourceCentre is the same as expected output
+		String testOutput = "";
+		String testOutput2 = "";
+		TuitionManagement.addStudent(students, s1);
+		TuitionManagement.addStudent(students, s2);
+		String allStudent = TuitionManagement.retrieveStudent(students);
+		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student1", "Student 1", 81122334, "student1@example.com");
+		testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student2", "Student 2", 81222334, "student2@example.com");
+		
+		// Test if the output is empty
+		assertEquals("Test that the expected output string is same as the list of students retrieved from the SourceCentre", testOutput, allStudent);
+		
+		//Given a list, after deleting 1 item, test that the arraylist has -1 item
+		TuitionManagement.deleteStudent(students, s2.getUserId());
+		assertEquals("Test that Student arraylist size is 1", 1, students.size());
+		
+		//test if the expected output string same as the list of Student retrieved from the SourceCentre	
+		allStudent = TuitionManagement.retrieveStudent(students);
+		
+		testOutput2 += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student1", "Student 1", 81122334, "student1@example.com");
+		
+		assertEquals("Test that ViewStudent list", testOutput2, allStudent);
+
 	}
 	
 	@Test

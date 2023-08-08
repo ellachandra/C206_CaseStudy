@@ -271,7 +271,7 @@ public class TuitionManagement {
 										Student newStudent = new Student(studentID, studentPassword, studentName, studentNumber, studentEmail);
 
 										// Add the new student to the ArrayList
-										students.add(newStudent);
+										TuitionManagement.addStudent(students, newStudent);
 
 										// Print a success message
 										System.out.println("Student added successfully!");
@@ -282,30 +282,15 @@ public class TuitionManagement {
 										Helper.line(120, "-");
 										System.out.println(String.format("%-10s %20s %20s %20s\n", "STUDENT ID", "STUDENT NAME", "STUDENT NUMBER", "STUDENT EMAIL")); //need to add eligibility
 										Helper.line(120, "-");
-										for (Student student : students) {
-											String studentId = student.getUserId();
-											String studentName = student.getName();
-											//add eligibility
-											int studentNumber = student.getNumber();
-											String studentEmail = student.getEmail();
-
-											System.out.printf("%-10s\t%-20s\t%-30s\t%-20s%n", studentId, studentName, studentNumber, studentEmail);
-										}
+										TuitionManagement.viewAllStudent(students);
 										Helper.line(120, "-");
 									}
 									else if(optionD == ADMIN_COURSE_DELETE) {
 										TuitionManagement.setHeader("DELETE EXISTING USER");
 										String deleteUser = Helper.readString("Enter studentID to delete: ");
 										
-										boolean deleted = false;
-										for (int i = 0; i < students.size(); i++) {
-											Student s = students.get(i);
-											if (s.getUserId().equals(deleteUser)) { //check against list
-												students.remove(i); //remove from list
-												deleted = true;
-												break;
-											}
-										}
+										boolean deleted = TuitionManagement.deleteStudent(students, deleteUser);
+										
 
 										// Print the result of the delete operation
 										if (deleted) {
@@ -520,6 +505,19 @@ public class TuitionManagement {
 		administrators.add(ad);
 		
 	}
+	public static void addStudent(ArrayList<Student> students, Student stud) {
+		Student user;
+		for(int i = 0; i < students.size(); i++) {
+			user = students.get(i);
+			if (user.getUserId().equalsIgnoreCase(stud.getUserId()) )
+				return;
+		}
+		if ((stud.getUserId().isEmpty()) || (stud.getEmail().isEmpty()) ) {
+			return;
+		}
+		students.add(stud);
+		
+	}
 	
 	public static String retrieveUser(ArrayList<Administrator> administrators) {
 		String output = "";
@@ -529,11 +527,48 @@ public class TuitionManagement {
 		return output;
 	}
 	
+	public static String retrieveStudent(ArrayList<Student> students) {
+		String output = "";
+		for (Student student : students) {
+			String studentId = student.getUserId();
+			String studentName = student.getName();
+			//add eligibility
+			int studentNumber = student.getNumber();
+			String studentEmail = student.getEmail();
+
+			output += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", studentId, studentName, studentNumber, studentEmail);
+		}
+		
+		return output;
+	}
+	
+	public static void viewAllStudent(ArrayList<Student> students) {
+		// write your code here
+		String output = retrieveStudent(students);
+		System.out.println(output);
+	}
+	
 	public static void viewAllUsers(ArrayList<Administrator> administrators) {
 		TuitionManagement.setHeader("VIEW ALL USERS");
 		String output = String.format("%-10s %20s %20s %20s\n", "USER ID", "USER NAME", "USER NUMBER", "USER EMAIL");
 		output += retrieveUser(administrators);	
 		System.out.println(output);
+	}
+	
+	public static boolean deleteStudent(ArrayList<Student> students, String deleteUser) {
+		boolean deleted = false;
+		
+		for (int i = 0; i < students.size(); i++) {
+			Student s = students.get(i);
+			if (s.getUserId().equals(deleteUser)) { //check against list
+				students.remove(i); //remove from list
+				deleted = true;
+				break;
+			}
+		}
+		return deleted;
+			
+		
 	}
 	
 	
