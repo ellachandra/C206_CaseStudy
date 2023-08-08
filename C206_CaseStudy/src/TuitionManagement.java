@@ -84,10 +84,13 @@ public class TuitionManagement {
         students.add(new Student("student3", "student789", "Student 3", 81322334, "student3@example.com", "O level"));
         students.add(new Student("student4", "studentabc", "Student 4", 81422334, "student4@example.com", "NT level"));
         
+        // enrolment List 
+        ArrayList<Enrolment> enrolmentList = new ArrayList<Enrolment>();
+        
 		ArrayList<Course> courseList = new ArrayList<Course>();
 		Course c1 = new Course("CS101", "Java Corp", "The Journey of Java", "", 20, "Mon, Wed 10:00 AM - 11:30 AM");
 		//added 1 more course to show eligibility example - ella
-		Course c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "Requires CS101", 40, "Tue, Thur 11:00 AM - 12:30 PM");
+		Course c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "NA level", 40, "Tue, Thur 11:00 AM - 12:30 PM");
 		courseList.add(c1);
 		courseList.add(c2);//ella
 		
@@ -328,11 +331,14 @@ public class TuitionManagement {
 								choice = Helper.readInt("Enter an option: ");
 								
 								if (choice == ADMIN_ENROLMENT_ADD) {
-									
+									addEnrolment();
+								}else if(choice == 2) {
+									viewEnrolment();
+								}else if(choice == 3) {
+									deleteEnrolment();
+								}else {
+									System.out.println("Invalid Option!");
 								}
-								
-								
-								
 							}
 							
 						}
@@ -623,10 +629,38 @@ public class TuitionManagement {
 	
 	// ----------------------- enrolment(Add, View, Delete)-----------------------------------
 	
-	public static void addEnrolment() {
+	public static void addEnrolment(ArrayList<Course> courseList, ArrayList<Student> students, ArrayList<Enrolment> enrolmentList) {
+		String studentName = Helper.readString("Enter Student Name: ");
+		String courseCode = Helper.readString("Enter the Course Code you wish to enrol the student: ");
+		boolean success = false;
+		
+		for(Course C: courseList) {
+			if(courseCode == C.getCourseCode()) {
+				for(Student S: students) {
+					if(studentName == S.getName()) {
+						if(C.getCourseEligibil() == "" || S.getEducationHistory() == C.getCourseEligibil()) {
+							Enrolment e1 = new Enrolment(studentName, courseCode);
+							System.out.println("Student Enrolled successfully!");
+							success = true;
+							enrolmentList.add(e1);
+						}
+					}
+				}
+			}
+		}
+		
+		if(!success) {
+			System.out.println("Invalid Student Name or Course Code!");
+		}
+	}
+	
+	public static void viewEnrolment() {
 		
 	}
 	
+	public static void deleteEnrolment() {
+		
+	}
 
 	}//end of all code
 
