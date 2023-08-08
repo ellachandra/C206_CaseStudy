@@ -48,6 +48,10 @@ public class TuitionManagement {
 	private static final int ADMIN_ATTENDANCE_DELETE = 3; // ella
 	private static final int ADMIN_ATTENDANCE_QUIT = 4; // ella
 	
+	private static final int ADMIN_FEE_ADD = 1;//donovan
+	private static final int ADMIN_FEE_VIEW = 2;//donovan
+	private static final int ADMIN_FEE_DELETE = 3;//donovan
+	private static final int ADMIN_FEE_QUIT = 4;//donovan
 
 	
 	
@@ -466,6 +470,15 @@ public class TuitionManagement {
 		System.out.println("1. Add a new Attendance");
 		System.out.println("2. View all Attendance");
 		System.out.println("3. Delete a students Attendance");
+		System.out.println("4. Quit");
+		Helper.line(80, "-");
+	}
+	
+	public static void feeTypeMenu() {
+		TuitionManagement.setHeader("FEE MANAGEMENT");
+		System.out.println("1. Add a new fee");
+		System.out.println("2. View all fee");
+		System.out.println("3. Delete an existing fee");
 		System.out.println("4. Quit");
 		Helper.line(80, "-");
 	}
