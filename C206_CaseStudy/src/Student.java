@@ -4,10 +4,12 @@ import java.util.List;
 
 public class Student extends User{
 	private List<Attendance> attendanceRecords;
+	private String educationHistory; // jacky
 
-	public Student(String userId, String password, String name, int number, String email) {
+	public Student(String userId, String password, String name, int number, String email, String EducationHistory) {
         super(userId,password, name, number, email);
         this.attendanceRecords = new ArrayList<>();
+        this.educationHistory = educationHistory; // jacky
     }
 	
 	
@@ -50,6 +52,10 @@ public class Student extends User{
                 attendanceRecords.remove(i);
             }
         }
+    }
+    
+    public String getEducationHistory() {
+    	return educationHistory;
     }
 
 }

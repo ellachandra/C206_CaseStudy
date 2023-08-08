@@ -13,6 +13,9 @@ import java.util.List;
 
 //ella has edited add, view and delete users
 public class TuitionManagement {
+	private static final int ADMIN_ENROLMENT_ADD = 1;
+	private static final int ADMIN_ENROLMENT_QUIT = 4;
+	// main menu
 	private static final int ADMIN_OPTION_QUIT = 7;// jia an
 	private static final int ADMIN_OPTION_USER = 1;// jia an
 	private static final int ADMIN_OPTION_COURSE = 2;// jia an
@@ -21,38 +24,45 @@ public class TuitionManagement {
 	private static final int ADMIN_OPTION_ENROLMENT = 5;// jia an
 	private static final int ADMIN_OPTION_ATTENDANCE = 6; // jia an
 	
-	
+	// login menu
 	private static final int ADMIN_LOGIN = 1; // jia an
 	private static final int STUDENT_LOGIN= 2; // jia an
 	private static final int TEACHER_LOGIN = 3; // jia an
 	private static final int NO_LOGIN = 4; // jia an
 	
+	// course menu
 	private static final int ADMIN_COURSE_ADD = 1; // jia an
 	private static final int ADMIN_COURSE_VIEW = 2; // jia an
 	private static final int ADMIN_COURSE_DELETE = 3; // jia an
 	private static final int ADMIN_COURSE_UPDATE = 4; // jia an
 	private static final int ADMIN_COURSE_QUIT = 5; // jia an
 
+	// user menu
 	private static final int ADMIN_USER_ADD = 1; // ella
 	private static final int ADMIN_USER_VIEW = 2; // ella
 	private static final int ADMIN_USER_DELETE = 3; // ella
 	private static final int ADMIN_USER_QUIT = 4; // ella
 	
+	// student menu
 	private static final int ADMIN_STUDENT_ADD = 1; // weile
 	private static final int ADMIN_STUDENT_VIEW = 2; // weile
 	private static final int ADMIN_STUDENT_DELETE = 3; // weile
 	private static final int ADMIN_STUDENT_QUIT = 4; // weile
 	
+	// attendance menu
 	private static final int ADMIN_ATTENDANCE_ADD = 1; // ella
 	private static final int ADMIN_ATTENDANCE_VIEW = 2; // ella
 	private static final int ADMIN_ATTENDANCE_DELETE = 3; // ella
 	private static final int ADMIN_ATTENDANCE_QUIT = 4; // ella
 	
+	// fee menu
 	private static final int ADMIN_FEE_ADD = 1;//donovan
 	private static final int ADMIN_FEE_VIEW = 2;//donovan
 	private static final int ADMIN_FEE_DELETE = 3;//donovan
 	private static final int ADMIN_FEE_QUIT = 4;//donovan
 
+	// enrolment menu
+	
 	
 	
 	/**
@@ -69,15 +79,15 @@ public class TuitionManagement {
         administrators.add(new Administrator("admin4", "adminabc", "Administrator 4", 94455667, "admin4@example.com"));
 
         ArrayList<Student> students = new ArrayList<>();
-        students.add(new Student("student1", "student123", "Student 1", 81122334, "student1@example.com"));
-        students.add(new Student("student2", "student456", "Student 2", 81222334, "student2@example.com"));
-        students.add(new Student("student3", "student789", "Student 3", 81322334, "student3@example.com"));
-        students.add(new Student("student4", "studentabc", "Student 4", 81422334, "student4@example.com"));
+        students.add(new Student("student1", "student123", "Student 1", 81122334, "student1@example.com", "NA level"));
+        students.add(new Student("student2", "student456", "Student 2", 81222334, "student2@example.com", "NA level"));
+        students.add(new Student("student3", "student789", "Student 3", 81322334, "student3@example.com", "O level"));
+        students.add(new Student("student4", "studentabc", "Student 4", 81422334, "student4@example.com", "NT level"));
         
 		ArrayList<Course> courseList = new ArrayList<Course>();
-		Course c1 = new Course("CS101", "Java Corp", "The Journey of Java", "", "Mon, Wed 10:00 AM - 11:30 AM");
+		Course c1 = new Course("CS101", "Java Corp", "The Journey of Java", "", 20, "Mon, Wed 10:00 AM - 11:30 AM");
 		//added 1 more course to show eligibility example - ella
-		Course c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "Requires CS101", "Tue, Thur 11:00 AM - 12:30 PM");
+		Course c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "Requires CS101", 40, "Tue, Thur 11:00 AM - 12:30 PM");
 		courseList.add(c1);
 		courseList.add(c2);//ella
 		
@@ -119,7 +129,7 @@ public class TuitionManagement {
 				// Code to Login for admin
 				boolean loginSuccessful = false;
 				String inputUserId = Helper.readString("Enter your userID: ");
-                 String inputPassword = Helper.readString("Enter your password: ");
+                String inputPassword = Helper.readString("Enter your password: ");
 				
 				for(Administrator admin: administrators) {
 					
@@ -201,10 +211,11 @@ public class TuitionManagement {
 										String courseName = Helper.readString("Enter Course Name: ");
 										String courseDescription = Helper.readString("Enter Course Description: ");
 										String courseEligibility = Helper.readString("Enter Course Eligibility Criteria: "); // added eligibility - ella
+										int courseAvailability = Helper.readInt("Enter Course Availability: "); // jacky
 										String schedule = Helper.readString("Enter Course Schedule: ");
 
 										// Create a new Course object with user input
-										Course newCourse = new Course(courseId, courseName, courseDescription, courseEligibility, schedule);
+										Course newCourse = new Course(courseId, courseName, courseDescription, courseEligibility, courseAvailability, schedule);
 
 										// Add the new course to the ArrayList
 										courseList.add(newCourse);
@@ -269,10 +280,10 @@ public class TuitionManagement {
 										String studentName = Helper.readString("Enter User Name: ");
 										int studentNumber = Helper.readInt("Enter User Contact Number: ");
 										String studentEmail = Helper.readString("Enter User Email: ");
-										
+										String educationHistory = Helper.readString("Enter Student's Highest level of Certification: ");
 
 										// Create a new Student object with user input
-										Student newStudent = new Student(studentID, studentPassword, studentName, studentNumber, studentEmail);
+										Student newStudent = new Student(studentID, studentPassword, studentName, studentNumber, studentEmail, educationHistory);
 
 										// Add the new student to the ArrayList
 										TuitionManagement.addStudent(students, newStudent);
@@ -311,6 +322,19 @@ public class TuitionManagement {
 						}
 						else if (optionA == ADMIN_OPTION_ENROLMENT) {
 							//code for Enrollment Management
+							int choice = 0;
+							while (choice != ADMIN_ENROLMENT_QUIT) {
+								TuitionManagement.enrolmentTypeMenu();
+								choice = Helper.readInt("Enter an option: ");
+								
+								if (choice == ADMIN_ENROLMENT_ADD) {
+									
+								}
+								
+								
+								
+							}
+							
 						}
 						else if(optionA == ADMIN_OPTION_ATTENDANCE) { //ella
 							//code for Attendance
@@ -406,6 +430,7 @@ public class TuitionManagement {
 	
 	
 	//================================ OTHER METHODS =======================================================
+	// ------------------------------- menu --------------------------------------------------------
 	
 	 public static void adminmenu() {
 			TuitionManagement.setHeader("Tuition Management App");
@@ -482,6 +507,18 @@ public class TuitionManagement {
 		System.out.println("4. Quit");
 		Helper.line(80, "-");
 	}
+	
+	public static void enrolmentTypeMenu() {
+		TuitionManagement.setHeader("ENROLMENT MANAGEMENT");
+		System.out.println("1. Enrol new student");
+		System.out.println("2. View all enrolment");
+		System.out.println("3. Delete an existing enrolment");
+		System.out.println("4. Quit");
+		Helper.line(80, "-");
+	}	
+	
+	
+	// ---------------------------------------------------------------------------------
 	
 	public static Student findStudentById(List<Student> students, String studentId) {
 	    for (Student student : students) {
@@ -584,7 +621,11 @@ public class TuitionManagement {
 		
 	}
 	
+	// ----------------------- enrolment(Add, View, Delete)-----------------------------------
 	
+	public static void addEnrolment() {
+		
+	}
 	
 
 	}//end of all code

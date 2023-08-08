@@ -7,8 +7,8 @@ public class Fee  {
 	private int amount;
 	
 	public Fee(String feeType, String dueDate, int amount) {
-		this.FeeType = FeeType;
-		this.DueDate = DueDate;
+		this.FeeType = feeType;
+		this.DueDate = dueDate;
 		this.amount = amount;
 	}
 

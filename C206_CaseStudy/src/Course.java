@@ -11,14 +11,16 @@ public class Course {
 	private String courseTitle;
 	private String courseDesc;
 	private String courseEligibil; //ella - added eligibility
+	private int courseAvailability; // jacky 
 	private String schedule;
 	
-	public Course(String courseCode, String courseTitle, String courseDesc, String courseEligibil, String schedule) {
+	public Course(String courseCode, String courseTitle, String courseDesc, String courseEligibil, int courseAvailability, String schedule) {
 		
 		this.courseCode = courseCode;
 		this.courseTitle = courseTitle;
 		this.courseDesc = courseDesc;
 		this.courseEligibil = courseEligibil; //ella
+		this.courseAvailability = courseAvailability; // jacky
 		this.schedule = schedule;
 	}
 
@@ -42,6 +44,9 @@ public class Course {
 		return schedule;
 	}
 	
+	public int getCourseAvailabiliy() {
+		return courseAvailability; // jacky
+	}
 	
 	
 }
