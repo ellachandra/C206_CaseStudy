@@ -65,7 +65,7 @@ public class C206_CaseStudyTest {
 	}
 	
 	@Test
-	public void testAddStudent() {
+	public void testAddStudent() { //weile
 		// Item list is not null, so that can add a new item - boundary
 		assertNotNull("Check if there is a valid User arraylist to add to", administrators);
 		//Given an empty list, after adding 1 item, the size of the list is 1 - normal
@@ -114,7 +114,7 @@ public class C206_CaseStudyTest {
 	}
 	
 	@Test
-	public void testRetrieveStudent() {
+	public void testRetrieveStudent() { //weile
 		// Test if Item list is not null but empty -boundary
 				assertNotNull("Test if there is valid Student arraylist to retrieve the item", students);
 				
@@ -153,7 +153,7 @@ public class C206_CaseStudyTest {
 	}
 	
 	@Test
-	public void testDeleteStudent() {
+	public void testDeleteStudent() { //weile
 		// Test if Item list is not null but empty -boundary
 		assertNotNull("Test if there is valid Student arraylist to delete a student", students);
 		

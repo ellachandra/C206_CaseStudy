@@ -306,7 +306,7 @@ public class TuitionManagement {
 							//code for Fee Management
 						}
 						else if (optionA == ADMIN_OPTION_ENROLMENT) {
-							//code for Enrolmant Management
+							//code for Enrollment Management
 						}
 						else if(optionA == ADMIN_OPTION_ATTENDANCE) { //ella
 							//code for Attendance
@@ -505,7 +505,7 @@ public class TuitionManagement {
 		administrators.add(ad);
 		
 	}
-	public static void addStudent(ArrayList<Student> students, Student stud) {
+	public static void addStudent(ArrayList<Student> students, Student stud) { //weile
 		Student user;
 		for(int i = 0; i < students.size(); i++) {
 			user = students.get(i);
@@ -527,7 +527,7 @@ public class TuitionManagement {
 		return output;
 	}
 	
-	public static String retrieveStudent(ArrayList<Student> students) {
+	public static String retrieveStudent(ArrayList<Student> students) { //weile
 		String output = "";
 		for (Student student : students) {
 			String studentId = student.getUserId();
@@ -542,20 +542,20 @@ public class TuitionManagement {
 		return output;
 	}
 	
-	public static void viewAllStudent(ArrayList<Student> students) {
+	public static void viewAllStudent(ArrayList<Student> students) { //weile
 		// write your code here
 		String output = retrieveStudent(students);
 		System.out.println(output);
 	}
 	
-	public static void viewAllUsers(ArrayList<Administrator> administrators) {
+	public static void viewAllUsers(ArrayList<Administrator> administrators) { 
 		TuitionManagement.setHeader("VIEW ALL USERS");
 		String output = String.format("%-10s %20s %20s %20s\n", "USER ID", "USER NAME", "USER NUMBER", "USER EMAIL");
 		output += retrieveUser(administrators);	
 		System.out.println(output);
 	}
 	
-	public static boolean deleteStudent(ArrayList<Student> students, String deleteUser) {
+	public static boolean deleteStudent(ArrayList<Student> students, String deleteUser) { //weile
 		boolean deleted = false;
 		
 		for (int i = 0; i < students.size(); i++) {
