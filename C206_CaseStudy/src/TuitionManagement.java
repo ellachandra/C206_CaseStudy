@@ -223,39 +223,35 @@ public class TuitionManagement {
 									System.out.println(
 											"Course Course\tCourse Name\t\tDescription\t\t\tEligibility\tAvailability\t\tSchedule");
 									Helper.line(180, "-");
-									for (Course course : courseList) {
-										String courseId = course.getCourseCode();
-										String courseName = course.getCourseTitle();
-										String eligibility = course.getCourseEligibil();
-										int availability = course.getCourseAvailability();
-										String courseDescription = course.getCourseDesc();
-										String schedule = course.getSchedule();
-
-										System.out.printf("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-15s%n", courseId,
-												courseName, courseDescription, eligibility, availability, schedule);
-									}
+//									for (Course course : courseList) {
+//										String courseId = course.getCourseCode();
+//										String courseName = course.getCourseTitle();
+//										String eligibility = course.getCourseEligibil();
+//										int availability = course.getCourseAvailability();
+//										String courseDescription = course.getCourseDesc();
+//										String schedule = course.getSchedule();
+//
+//										System.out.printf("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-15s%n", courseId,
+//												courseName, courseDescription, eligibility, availability, schedule);
+//										
+//										
+//										
+//									}
+									TuitionManagement.viewAllCourses(courseList);	
 									Helper.line(180, "-");
 								} else if (optionC == ADMIN_COURSE_DELETE) {
-									TuitionManagement.setHeader("VIEW ALL COURSE");
+									TuitionManagement.setHeader("DELETE A COURSE");
 									String courseIdToDelete = Helper.readString("Enter the Course ID to delete:");
 
-									// Delete the course with the given course ID
-									boolean courseDeleted = false;
-									for (int i = 0; i < courseList.size(); i++) {
-										Course course = courseList.get(i);
-										if (course.getCourseCode().equals(courseIdToDelete)) {
-											courseList.remove(i);
-											courseDeleted = true;
-											break;
-										}
-									}
+								    // Delete the course with the given course ID
+								    boolean courseDeleted = deleteCourse(courseList, courseIdToDelete);
 
-									// Print the result of the delete operation
-									if (courseDeleted) {
-										System.out.println("Course with ID " + courseIdToDelete + " has been deleted.");
-									} else {
-										System.out.println("Course with ID " + courseIdToDelete + " not found.");
-									}
+								    // Print the result of the delete operation
+								    if (courseDeleted) {
+								        System.out.println("Course with ID " + courseIdToDelete + " has been deleted.");
+								    } else {
+								        System.out.println("Course with ID " + courseIdToDelete + " not found.");
+								    }
 								}
 							}
 
@@ -293,7 +289,7 @@ public class TuitionManagement {
 									Helper.line(120, "-");
 									System.out.println(String.format("%-10s %20s %20s %20s\n", "STUDENT ID",
 											"STUDENT NAME", "STUDENT NUMBER", "STUDENT EMAIL")); // need to add
-																									// eligibility
+																						// eligibility
 									Helper.line(120, "-");
 									TuitionManagement.viewAllStudent(students);
 									Helper.line(120, "-");
@@ -563,21 +559,7 @@ public class TuitionManagement {
 		students.add(stud);
 
 	}
-
-	public static void addCourse(ArrayList<Course> courseList, Course course) {
-		for (Course existingCourse : courseList) {
-			if (existingCourse.getCourseCode().equalsIgnoreCase(course.getCourseCode())) {
-				return; // Course with the same code already exists
-			}
-		}
-
-		if (course.getCourseCode().isEmpty() || course.getCourseTitle().isEmpty() || course.getCourseDesc().isEmpty()
-				|| course.getSchedule().isEmpty()) {
-			return; // Course information is incomplete
-		}
-
-		courseList.add(course);
-	}
+	
 
 	public static String retrieveUser(ArrayList<Administrator> administrators) {
 		String output = "";
@@ -614,6 +596,62 @@ public class TuitionManagement {
 		}
 		return deleted;
 	}
+	
+	//Course stuff
+	
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	public static void addCourse(ArrayList<Course> courseList, Course course) {
+		for (Course existingCourse : courseList) {
+			if (existingCourse.getCourseCode().equalsIgnoreCase(course.getCourseCode())) {
+				return; // Course with the same code already exists
+			}
+		}
+
+		if (course.getCourseCode().isEmpty() || course.getCourseTitle().isEmpty() || 
+			    course.getCourseDesc().isEmpty() ||  
+			    course.getCourseAvailability() <= 0 || course.getSchedule().isEmpty()) {
+			    return; // Course information is incomplete or invalid
+			}
+
+		courseList.add(course);
+	}
+	public static String retrieveCourses(ArrayList<Course> courseList) {
+	    String output = "";
+	    for (Course course : courseList) {
+	        String courseId = course.getCourseCode();
+	        String courseTitle = course.getCourseTitle();
+	        String courseDescription = course.getCourseDesc();
+	        String eligibility = course.getCourseEligibil();
+	        int availability = course.getCourseAvailability();
+	        String schedule = course.getSchedule();
+
+	        output += String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n",
+	                courseId, courseTitle, courseDescription, eligibility, availability, schedule);
+	    }
+	    return output;
+	}
+	public static void viewAllCourses(ArrayList<Course> courseList) {
+	    String output = retrieveCourses(courseList);
+	    System.out.println(output);
+	}
+	
+	public static boolean deleteCourse(ArrayList<Course> courseList, String courseCodeToDelete) {
+	    boolean deleted = false;
+
+	    for (int i = 0; i < courseList.size(); i++) {
+	        Course course = courseList.get(i);
+	        if (course.getCourseCode().equals(courseCodeToDelete)) {
+	            courseList.remove(i);
+	            deleted = true;
+	            break;
+	        }
+	    }
+
+	    return deleted;
+	}
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 	public static String retrieveStudent(ArrayList<Student> students) { // weile
 		String output = "";
@@ -630,6 +668,7 @@ public class TuitionManagement {
 
 		return output;
 	}
+	
 
 	public static void viewAllStudent(ArrayList<Student> students) { // weile
 		// write your code here

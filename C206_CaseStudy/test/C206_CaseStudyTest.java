@@ -91,19 +91,19 @@ public class C206_CaseStudyTest {
 	
 	@Test
 	public void testAddCourse() {
-		// Item list is not null, so that can add a new item - boundary
-				assertNotNull("Check if there is a valid User arraylist to add to", courseList);
-				//Given an empty list, after adding 1 item, the size of the list is 1 - normal
-				//The item just added is as the same as the first item of the list
-				TuitionManagement.addCourse(students, s1);
-				assertEquals("Check that students arrayList size is 1,", 1, students.size());
-				assertSame("Check that Student is added,", s1, students.get(0));
-				
-				//Add another item. test The size of the list is 2? -normal
-				//The item just added is as same as the second item of the list
-				TuitionManagement.addStudent(students, s2);
-				assertEquals("Test that Student is added,", s2, students.get(1));
-		
+		 // Item list is not null, so that can add a new item - boundary
+	    assertNotNull("Check if there is a valid Course arraylist to add to", courseList);
+
+	    // Given an empty list, after adding 1 item, the size of the list is 1 - normal
+	    // The item just added is as the same as the first item of the list
+	    TuitionManagement.addCourse(courseList, c1);
+	    assertEquals("Check that courseList arrayList size is 1,", 1, courseList.size());
+	    assertSame("Check that Course is added,", c1, courseList.get(0));
+
+	    // Add another item. Test if the size of the list is 2? - normal
+	    // The item just added is as same as the second item of the list
+	    TuitionManagement.addCourse(courseList, c2);
+	    assertEquals("Test that Course is added,", c2, courseList.get(1));
 	}
 	
 	@Test
@@ -162,6 +162,28 @@ public class C206_CaseStudyTest {
 	
 	@Test
 	public void testRetrieveCourse() {
+		 // Test if Item list is not null but empty - boundary
+	    assertNotNull("Test if there is valid Course arraylist to retrieve the item", courseList);
+
+	    // Test if the list of courses retrieved from the SourceCentre is empty - boundary
+	    String allCourses = TuitionManagement.retrieveCourses(courseList);
+	    String testOutput = "";
+	    // Test if the output is empty
+	    assertEquals("Test that nothing is displayed", testOutput, allCourses);
+
+	    // Given an empty list, after adding 2 items, test if the size of the list is 2 - normal
+	    courseList.add(c1);
+	    courseList.add(c2);
+	    assertEquals("Test that Course arraylist size is 2", 2, courseList.size());
+
+	    // Test if the expected output string is the same as the list of courses retrieved from the SourceCentre
+	    allCourses = TuitionManagement.retrieveCourses(courseList);
+	    testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n",
+	            "CS101", "Java Corp", "The Journey of Java", "", 20, "Mon, Wed 10:00 AM - 11:30 AM");
+	    testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n",
+	            "CS102", "Java Corp 2", "Advanced journey of Java", "NA level", 40, "Tue, Thur 11:00 AM - 12:30 PM");
+
+	    assertEquals("Test that ViewCourse list", testOutput, allCourses);
 		
 	}
 	
@@ -232,6 +254,35 @@ public class C206_CaseStudyTest {
 	@Test
 	public void testDeleteCourse() {
 		
+		
+		 // Test if Item list is not null but empty - boundary
+	    assertNotNull("Test if there is valid Course arraylist to delete a course", courseList);
+
+	    // Test if the list of courses retrieved from the SourceCentre is the same as expected output
+	    String testOutput = "";
+	    String testOutput2 = "";
+	    courseList.add(c1);
+	    courseList.add(c2);
+	    String allCourses = TuitionManagement.retrieveCourses(courseList);
+	    testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n",
+	            "CS101", "Java Corp", "The Journey of Java", "", 20, "Mon, Wed 10:00 AM - 11:30 AM");
+	    testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n",
+	            "CS102", "Java Corp 2", "Advanced journey of Java", "NA level", 40, "Tue, Thur 11:00 AM - 12:30 PM");
+
+	    // Test if the output is empty
+	    assertEquals("Test that the expected output string is same as the list of courses retrieved from the SourceCentre", testOutput, allCourses);
+
+	    // Given a list, after deleting 1 item, test that the arraylist has -1 item
+	    TuitionManagement.deleteCourse(courseList, c2.getCourseCode());
+	    assertEquals("Test that Course arraylist size is 1", 1, courseList.size());
+
+	    // Test if the expected output string same as the list of courses retrieved from the SourceCentre
+	    allCourses = TuitionManagement.retrieveCourses(courseList);
+
+	    testOutput2 += String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n",
+	            "CS101", "Java Corp", "The Journey of Java", "", 20, "Mon, Wed 10:00 AM - 11:30 AM");
+
+	    assertEquals("Test that ViewCourse list", testOutput2, allCourses);
 	}
 
 	// ---------- Test Enrollment ----------------------------
