@@ -16,11 +16,13 @@ public class C206_CaseStudyTest {
 	private Teacher t2;
 	private Course c1;
 	private Course c2;
+	private Enrolment e1;
 	
 	private ArrayList<Student> students;
 	private ArrayList<Administrator> administrators;
 	private ArrayList<Teacher> teachers;
 	private ArrayList<Course> courseList;
+	private ArrayList<Enrolment> enrolmentList;
 	
 	
 	public C206_CaseStudyTest() {
@@ -38,11 +40,13 @@ public class C206_CaseStudyTest {
 		t2 = new Teacher("teacher2", "teacher456", "Teacher 2", 82233445, "teacher2@example.com");
 		c1 = new Course("CS101", "Java Corp", "The Journey of Java", "", 20, "Mon, Wed 10:00 AM - 11:30 AM");
 		c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "NA level", 40, "Tue, Thur 11:00 AM - 12:30 PM");
+		e1 = new Enrolment("Student 1", "CS101");
 		
 		students = new ArrayList<Student>();
 		administrators = new ArrayList<Administrator>();
 		teachers = new ArrayList<Teacher>();
 		courseList = new ArrayList<Course>();
+		enrolmentList = new ArrayList<Enrolment>();
 	}
 
 
@@ -230,6 +234,67 @@ public class C206_CaseStudyTest {
 		
 	}
 
+	// ---------- Test Enrollment ----------------------------
+	
+	@Test
+	public void testDoAddEnrolment() {
+		// List not null so that can add a new item - boundary testing 
+		assertNotNull("Check if there is valid Enrolment array list to add to", enrolmentList);
+		
+		// Test that item added into array list should increase the size of the empty array list
+		TuitionManagement.doAddEnrolment(courseList, students, enrolmentList, e1);
+		assertEquals("Check that Enrolment arraylist size is 1", 1, enrolmentList.size());
+		
+		// Test that item is the added is the same as the first item of the list
+		assertSame("Check that Enrolment is added", e1, enrolmentList.get(0));
+	}
+	
+	@Test
+	public void testRetrieveAllEnrolment() {
+		// List not null so that can add a new item - boundary testing 
+		assertNotNull("Check if there is valid Enrolment array list to add to", enrolmentList);
+		
+		// Test that list of enrolment is empty
+		String allEnrolment = TuitionManagement.retrieveAllEnrolment(enrolmentList);
+		String testOutput = "";
+		assertEquals("Check that enrolment list is empty", testOutput, allEnrolment);
+		
+		// Test that the empty list size is 1 when added 1 item
+		TuitionManagement.doAddEnrolment(courseList, students, enrolmentList, e1);
+		assertEquals("Test that Enrolment arraylist size is 1", 1, enrolmentList);
+		
+		// test if the expected output string is the same as the list of enrolments retrieved
+		allEnrolment = TuitionManagement.retrieveAllEnrolment(enrolmentList);
+		testOutput = String.format("%-15s %-10s\n", "Student 1", "CS101");
+		assertEquals("Test that output retrieveAllEnrolment output is the same as expected", testOutput, allEnrolment);
+		
+	}
+	
+	@Test
+	public void testDoDeleteEnrolment() {
+		// List not null so that can add a new item - boundary testing 
+		assertNotNull("Check if there is valid Enrolment array list to add to", enrolmentList);
+		
+		// Test that the empty list size is 1 when added 1 item
+		TuitionManagement.doAddEnrolment(courseList, students, enrolmentList, e1);
+		assertEquals("Test that Enrolment arraylist size is 1", 1, enrolmentList);
+		
+		// test if the expected output string is the same as the list of enrolments retrieved
+		String allEnrolment = TuitionManagement.retrieveAllEnrolment(enrolmentList);
+		String testOutput = String.format("%-15s %-10s\n", "Student 1", "CS101");
+		assertEquals("Test that output retrieveAllEnrolment output is the same as expected", testOutput, allEnrolment);
+		
+		// test that output is empty when item is deleted 
+		TuitionManagement.doDeleteEnrolment(enrolmentList, e1.getStudentName());
+		allEnrolment = TuitionManagement.retrieveAllEnrolment(enrolmentList);
+		testOutput = "";
+		assertEquals("Test that output retrieveAllEnrolment output is empty as expected", testOutput, allEnrolment);
+		
+		// test that list is empty and size is 0
+		assertEquals("Test that Enrolment arraylist size is 0", 0, enrolmentList);
+	}
+	
+	
 	
 	@After
 	public void tearDown() throws Exception {
@@ -241,6 +306,7 @@ public class C206_CaseStudyTest {
 		t2 = null;
 		c1 = null;
 		c2 = null;
+		e1 = null;
 	}
 }
 
