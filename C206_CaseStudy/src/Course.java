@@ -44,7 +44,7 @@ public class Course {
 		return schedule;
 	}
 	
-	public int getCourseAvailabiliy() {
+	public int getCourseAvailability() {
 		return courseAvailability; // jacky
 	}
 	

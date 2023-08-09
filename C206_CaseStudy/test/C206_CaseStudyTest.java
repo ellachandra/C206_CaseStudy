@@ -36,8 +36,8 @@ public class C206_CaseStudyTest {
 		a2 = new Administrator("admin2", "admin456", "Administrator 2", 92233445, "admin2@example.com");
 		t1 = new Teacher("teacher1", "teacher123", "Teacher 1", 81122334, "teacher1@example.com");
 		t2 = new Teacher("teacher2", "teacher456", "Teacher 2", 82233445, "teacher2@example.com");
-		c1 = new Course("CS101", "Java Corp", "The Journey of Java", "", "Mon, Wed 10:00 AM - 11:30 AM");
-		c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "Requires CS101", "Tue, Thur 11:00 AM - 12:30 PM");
+		c1 = new Course("CS101", "Java Corp", "The Journey of Java", "", 20, "Mon, Wed 10:00 AM - 11:30 AM");
+		c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "NA level", 40, "Tue, Thur 11:00 AM - 12:30 PM");
 		
 		students = new ArrayList<Student>();
 		administrators = new ArrayList<Administrator>();
@@ -87,6 +87,18 @@ public class C206_CaseStudyTest {
 	
 	@Test
 	public void testAddCourse() {
+		// Item list is not null, so that can add a new item - boundary
+				assertNotNull("Check if there is a valid User arraylist to add to", courseList);
+				//Given an empty list, after adding 1 item, the size of the list is 1 - normal
+				//The item just added is as the same as the first item of the list
+				TuitionManagement.addCourse(students, s1);
+				assertEquals("Check that students arrayList size is 1,", 1, students.size());
+				assertSame("Check that Student is added,", s1, students.get(0));
+				
+				//Add another item. test The size of the list is 2? -normal
+				//The item just added is as same as the second item of the list
+				TuitionManagement.addStudent(students, s2);
+				assertEquals("Test that Student is added,", s2, students.get(1));
 		
 	}
 	

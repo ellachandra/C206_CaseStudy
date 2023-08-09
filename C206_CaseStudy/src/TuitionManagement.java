@@ -221,7 +221,7 @@ public class TuitionManagement {
 										Course newCourse = new Course(courseId, courseName, courseDescription, courseEligibility, courseAvailability, schedule);
 
 										// Add the new course to the ArrayList
-										courseList.add(newCourse);
+										TuitionManagement.addCourse(courseList,newCourse);
 
 										// Print a success message
 										System.out.println("Course added successfully!");
@@ -230,18 +230,20 @@ public class TuitionManagement {
 										TuitionManagement.setHeader("VIEW ALL COURSE");
 										System.out.println("ALL COURSES:");
 										Helper.line(120, "-");
-										System.out.println("Course Course\tCourse Name\t\tDescription\t\t\tSchedule"); //need to add eligibility
-										Helper.line(120, "-");
+										 System.out.println("Course Course\tCourse Name\t\tDescription\t\t\tEligibility\tAvailability\t\tSchedule");
+										Helper.line(180, "-");
 										for (Course course : courseList) {
 											String courseId = course.getCourseCode();
 											String courseName = course.getCourseTitle();
-											//add eligibility
+											String eligibility = course.getCourseEligibil();
+							                int availability = course.getCourseAvailability();
 											String courseDescription = course.getCourseDesc();
 											String schedule = course.getSchedule();
 
-											System.out.printf("%-10s\t%-20s\t%-30s\t%-20s%n", courseId, courseName, courseDescription, schedule);
+											 System.out.printf("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-15s%n",
+								                        courseId, courseName, courseDescription, eligibility, availability, schedule);
 										}
-										Helper.line(120, "-");
+										Helper.line(180, "-");
 									}
 									else if(optionC == ADMIN_COURSE_DELETE) {
 										TuitionManagement.setHeader("VIEW ALL COURSE");
@@ -331,7 +333,7 @@ public class TuitionManagement {
 								choice = Helper.readInt("Enter an option: ");
 								
 								if (choice == ADMIN_ENROLMENT_ADD) {
-									addEnrolment();
+									//addEnrolment();
 								}else if(choice == 2) {
 									viewEnrolment();
 								}else if(choice == 3) {
@@ -573,6 +575,20 @@ public class TuitionManagement {
 		}
 		students.add(stud);
 		
+	}
+	public static void addCourse(ArrayList<Course> courseList, Course course) {
+	    for (Course existingCourse : courseList) {
+	        if (existingCourse.getCourseCode().equalsIgnoreCase(course.getCourseCode())) {
+	            return; // Course with the same code already exists
+	        }
+	    }
+
+	    if (course.getCourseCode().isEmpty() || course.getCourseTitle().isEmpty() ||
+	            course.getCourseDesc().isEmpty() || course.getSchedule().isEmpty()) {
+	        return; // Course information is incomplete
+	    }
+
+	    courseList.add(course);
 	}
 	
 	public static String retrieveUser(ArrayList<Administrator> administrators) {
