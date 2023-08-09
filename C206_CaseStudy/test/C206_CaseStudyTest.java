@@ -30,8 +30,8 @@ public class C206_CaseStudyTest {
 	@Before
 	public void setUp() throws Exception {
 		//prepare test data
-		s1 = new Student("student1", "student123", "Student 1", 81122334, "student1@example.com");
-		s2 = new Student("student2", "student456", "Student 2", 81222334, "student2@example.com");
+		s1 = new Student("student1", "student123", "Student 1", 81122334, "student1@example.com", "NA level");
+		s2 = new Student("student2", "student456", "Student 2", 81222334, "student2@example.com", "NA level");
 		a1 = new Administrator("admin1", "admin123", "Administrator 1", 91122334, "admin1@example.com");
 		a2 = new Administrator("admin2", "admin456", "Administrator 2", 92233445, "admin2@example.com");
 		t1 = new Teacher("teacher1", "teacher123", "Teacher 1", 81122334, "teacher1@example.com");
@@ -110,10 +110,12 @@ public class C206_CaseStudyTest {
 		//test if the list of administrator retrieved from the SourceCentre is empty - boundary
 		String allAdministrator = TuitionManagement.retrieveUser(administrators);
 		String testOutput = "";
+		// Test if the output is empty
+		assertEquals("Test that nothing is displayed,", testOutput, allAdministrator);
 		
 		//Given an empty list, after adding 2 items, test if the size of the list is 2 - normal
-		TuitionManagement.addAdministrator(administrators, a1);
-		TuitionManagement.addAdministrator(administrators, a2);
+		TuitionManagement.addUser(administrators, a1);
+		TuitionManagement.addUser(administrators, a2);
 		assertEquals("Test that Administrator arraylist size is 2", 2, administrators.size());
 		
 		//test if the expected output string same as the list of Administrator retrieved from the SourceCentre	
@@ -161,7 +163,31 @@ public class C206_CaseStudyTest {
 	
 	@Test
 	public void testDeleteUser() {
+		// Test if Item list is not null but empty -boundary
+		assertNotNull("Test if there is valid Administrator arraylist to delete a student", administrators);
 		
+		//test if the list of users retrieved from the SourceCentre is the same as expected output
+		String testOutput = "";
+		String testOutput2 = "";
+		TuitionManagement.addUser(administrators, a1);
+		TuitionManagement.addUser(administrators, a2);
+		String allUser = TuitionManagement.retrieveUser(administrators);
+		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "admin1", "admin123", "Administrator 1", 91122334, "admin1@example.com");
+		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "admin2", "admin456", "Administrator 2", 92233445, "admin2@example.com");
+		
+		// Test if the output is empty
+		assertEquals("Test that the expected output string is same as the list of administrators retrieved from the SourceCentre", testOutput, allUser);
+		
+		//Given a list, after deleting 1 item, test that the arraylist has -1 item
+		TuitionManagement.deleteUser(administrators, a2.getUserId());
+		assertEquals("Test that Administrator arraylist size is 1", 1, administrators.size());
+		
+		//test if the expected output string same as the list of Student retrieved from the SourceCentre	
+		allUser = TuitionManagement.retrieveUser(administrators);
+		
+		testOutput2 += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "admin1", "admin123", "Administrator 1", 91122334, "admin1@example.com");
+		
+		assertEquals("Test that ViewUser list", testOutput2, allUser);
 	}
 	
 	@Test
