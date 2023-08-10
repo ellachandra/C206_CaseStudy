@@ -8,31 +8,31 @@ import org.junit.Test;
 
 public class C206_CaseStudyTest {
 
-	private Student s1;
-	private Student s2;
-	private Administrator a1;
-	private Administrator a2;
-	private Teacher t1;
-	private Teacher t2;
-	private Course c1;
-	private Course c2;
+	private Student s1; //ella
+	private Student s2; //ella
+	private Administrator a1; //ella
+	private Administrator a2; //ella
+	private Teacher t1; 
+	private Teacher t2; 
+	private Course c1; //ella
+	private Course c2; //ella
 	private Enrolment e1;
 	private Fee fee1;
 	private Fee fee2;
 
-	private ArrayList<Student> students;
-	private ArrayList<Administrator> administrators;
+	private ArrayList<Student> students; //ella
+	private ArrayList<Administrator> administrators; //ella
 	private ArrayList<Teacher> teachers;
 	private ArrayList<Course> courseList;
 	private ArrayList<Enrolment> enrolmentList;
 	private ArrayList<Fee> feeList;
 
-	public C206_CaseStudyTest() {
+	public C206_CaseStudyTest() { //ella
 		super();
 	}
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception { //ella
 		// prepare test data
 		s1 = new Student("student1", "student123", "Student 1", 81122334, "student1@example.com", "Programming experience");
 		s2 = new Student("student2", "student456", "Student 2", 81222334, "student2@example.com", "Programming experience");
@@ -57,7 +57,7 @@ public class C206_CaseStudyTest {
 
 	@Test
 	// test add user(administrator)
-	public void testAddUser() {
+	public void testAddUser() { //ella
 		// Item list is not null, so that can add a new item - boundary
 		assertNotNull("Check if there is a valid User arraylist to add to", students);
 		// Given an empty list, after adding 1 item, the size of the list is 1 - normal
@@ -150,9 +150,9 @@ public class C206_CaseStudyTest {
 		// test if the expected output string same as the list of Administrator
 		// retrieved from the SourceCentre
 		allAdministrator = TuitionManagement.retrieveUser(administrators);
-		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "admin1", "admin123", "Administrator 1", 91122334,
+		testOutput = String.format("%-10s %-10s %-20s %-10d %-30s\n", "admin1", "admin123", "Administrator 1", 91122334,
 				"admin1@example.com");
-		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "admin2", "admin456", "Administrator 2", 92233445,
+		testOutput += String.format("%-10s %-10s %-20s %-10d %-30s\n", "admin2", "admin456", "Administrator 2", 92233445,
 				"admin2@example.com");
 
 		assertEquals("Test that ViewUser list", testOutput, allAdministrator);
@@ -250,7 +250,7 @@ public class C206_CaseStudyTest {
 	}
 
 	@Test
-	public void testDeleteUser() {
+	public void testDeleteUser() { //ella
 		// Test if Item list is not null but empty -boundary
 		assertNotNull("Test if there is valid Administrator arraylist to delete a student", administrators);
 
@@ -261,15 +261,13 @@ public class C206_CaseStudyTest {
 		TuitionManagement.addUser(administrators, a1);
 		TuitionManagement.addUser(administrators, a2);
 		String allUser = TuitionManagement.retrieveUser(administrators);
-		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "admin1", "admin123", "Administrator 1", 91122334,
+		testOutput = String.format("%-10s %-10s %-20s %-10d %-30s\n", "admin1", "admin123", "Administrator 1", 91122334,
 				"admin1@example.com");
-		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "admin2", "admin456", "Administrator 2", 92233445,
+		testOutput += String.format("%-10s %-10s %-20s %-10d %-30s\n", "admin2", "admin456", "Administrator 2", 92233445,
 				"admin2@example.com");
 
 		// Test if the output is empty
-		assertEquals(
-				"Test that the expected output string is same as the list of administrators retrieved from the SourceCentre",
-				testOutput, allUser);
+		assertEquals("Test that the expected output string is same as the list of administrators retrieved from the SourceCentre",testOutput, allUser);
 
 		// Given a list, after deleting 1 item, test that the arraylist has -1 item
 		TuitionManagement.deleteUser(administrators, a2.getUserId());
@@ -279,7 +277,7 @@ public class C206_CaseStudyTest {
 		// the SourceCentre
 		allUser = TuitionManagement.retrieveUser(administrators);
 
-		testOutput2 += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "admin1", "admin123", "Administrator 1", 91122334,
+		testOutput2 += String.format("%-10s %-10s %-20s %-10d %-30s\n", "admin1", "admin123", "Administrator 1", 91122334,
 				"admin1@example.com");
 
 		assertEquals("Test that ViewUser list", testOutput2, allUser);
@@ -461,7 +459,7 @@ public class C206_CaseStudyTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() throws Exception { //ella
 		s1 = null;
 		s2 = null;
 		a1 = null;

@@ -86,26 +86,26 @@ public class TuitionManagement {
 		Enrolment e1 = new Enrolment("Student 1", "CS101");
 		enrolmentList.add(e1);
 		
-		// Find a student by their ID
+		// Find a student by their ID - ella
 		Student student1 = findStudentById(students, "student1");
 		Student student2 = findStudentById(students, "student2");
 
-		// Mark attendance for student1 in course c1
+		// Mark attendance for student1 in course c1 - ella
 		student1.markAttendance(c1.getCourseCode(), true, "1");
 		student1.markAttendance(c1.getCourseCode(), false, "2");
 		student1.markAttendance(c1.getCourseCode(), true, "3");
 
-		// Mark attendance for student1 in course c2
+		// Mark attendance for student1 in course c2 - ella
 		student1.markAttendance(c2.getCourseCode(), true, "1");
 		student1.markAttendance(c2.getCourseCode(), true, "2");
 		student1.markAttendance(c2.getCourseCode(), true, "3");
 
-		// Mark attendance for student2 in course c1
+		// Mark attendance for student2 in course c1 - ella
 		student2.markAttendance(c1.getCourseCode(), true, "1");
 		student2.markAttendance(c1.getCourseCode(), true, "2");
 		student2.markAttendance(c1.getCourseCode(), false, "3");
 
-		// Mark attendance for student2 in course c2
+		// Mark attendance for student2 in course c2 - ella
 		student2.markAttendance(c2.getCourseCode(), true, "1");
 		student2.markAttendance(c2.getCourseCode(), false, "2");
 		student2.markAttendance(c2.getCourseCode(), true, "3");
@@ -154,7 +154,7 @@ public class TuitionManagement {
 								TuitionManagement.userTypeMenu(); //menu
 								choice = Helper.readInt("Enter an option > ");
 								
-								if (choice == ADMIN_USER_ADD) { //add user
+								if (choice == ADMIN_USER_ADD) { //add user -ella
 									TuitionManagement.setHeader("ADD NEW USER");
 									
 									//Add a user
@@ -163,18 +163,17 @@ public class TuitionManagement {
 									//print success message
 									System.out.println("User added successfully!");
 									
-								} else if (choice == ADMIN_USER_VIEW) { //view all users
+								} else if (choice == ADMIN_USER_VIEW) { //view all users - ella
 									TuitionManagement.viewAllUsers(administrators);
 									
 									
-									
-								} else if (choice == ADMIN_USER_DELETE) { //delete all users
+								} else if (choice == ADMIN_USER_DELETE) { //delete all users - ella
 									TuitionManagement.setHeader("DELETE EXISTING USER");
 									String deleteUser = Helper.readString("Enter userID to delete: ");
 									
 									boolean deleted = TuitionManagement.deleteStudent(students, deleteUser);
 									
-									if (deleted == true) { //print message
+									if (deleted == true) { //print message - ella
 										System.out.println("UserID: " + deleteUser + " has been deleted successfully!");
 									} else {
 										System.out.println("UserID: " + deleteUser + " cannot be found!");
@@ -373,11 +372,11 @@ public class TuitionManagement {
 						else if(optionA == ADMIN_OPTION_ATTENDANCE) { //ella
 							//code for Attendance
 							int choice = 0;
-							while (choice != ADMIN_ATTENDANCE_QUIT) {
+							while (choice != ADMIN_ATTENDANCE_QUIT) { //ella
 								TuitionManagement.attendanceTypeMenu();
 								choice = Helper.readInt("Enter an option > ");
 								
-								if (choice == ADMIN_ATTENDANCE_ADD) {
+								if (choice == ADMIN_ATTENDANCE_ADD) { // ella
 									TuitionManagement.setHeader("ADD ATTENDANCE");
 									
 									String studentId = Helper.readString("Enter Student ID: ");
@@ -399,7 +398,7 @@ public class TuitionManagement {
 								        System.out.println("Student not found!");
 								    }
 								    
-								} else if (choice == ADMIN_ATTENDANCE_VIEW) {
+								} else if (choice == ADMIN_ATTENDANCE_VIEW) { // ella
 									 TuitionManagement.setHeader("VIEW ALL ATTENDANCE");
 									    String studentId = Helper.readString("Enter Student ID: ");
 									    Student student = findStudentById(students, studentId);
@@ -422,7 +421,7 @@ public class TuitionManagement {
 									        System.out.println("Student Not Found!");
 									    }
 										
-								} else if (choice == ADMIN_ATTENDANCE_DELETE) { //deletes lesson by lesson
+								} else if (choice == ADMIN_ATTENDANCE_DELETE) { //deletes lesson by lesson - ella
 				                    TuitionManagement.setHeader("DELETE STUDENT ATTENDANCE");
 				                    String studentId = Helper.readString("Enter Student ID: ");
 				                    Student student = findStudentById(students, studentId);
@@ -506,7 +505,7 @@ public class TuitionManagement {
 
 	}
 
-	public static void userTypeMenu() {
+	public static void userTypeMenu() { //ella
 		TuitionManagement.setHeader("USER MANAGEMENT");
 		System.out.println("1. Add a new user");
 		System.out.println("2. View all user");
@@ -553,7 +552,7 @@ public class TuitionManagement {
 		Helper.line(80, "-");
 	}
 
-	public static Student findStudentById(List<Student> students, String studentId) {
+	public static Student findStudentById(List<Student> students, String studentId) {//weile
 		for (Student student : students) {
 			if (student.getUserId().equals(studentId)) {
 				return student;
@@ -562,7 +561,7 @@ public class TuitionManagement {
 		return null; // Return null if student is not found
 	}
 
-	public static Administrator inputUser() {
+	public static Administrator inputUser() { //ella
 
 		String userID = Helper.readString("Enter User ID: ");
 		String userPassword = Helper.readString("Enter a password: ");
@@ -575,7 +574,7 @@ public class TuitionManagement {
 
 	}
 
-	public static void addUser(ArrayList<Administrator> administrators, Administrator ad) {
+	public static void addUser(ArrayList<Administrator> administrators, Administrator ad) {//ella
 		Administrator user;
 		for (int i = 0; i < administrators.size(); i++) {
 			user = administrators.get(i);
@@ -681,22 +680,29 @@ public class TuitionManagement {
 		System.out.println(output);
 	}
 
-	public static String retrieveUser(ArrayList<Administrator> administrators) {
+	public static String retrieveUser(ArrayList<Administrator> administrators) { //ella
 		String output = "";
-		for (int i = 0; i < administrators.size(); i++) {
-			output += String.format("%-84s\n", administrators.get(i).toString());
+		for (Administrator admin : administrators) {
+			String userId = admin.getUserId();
+			String password = admin.getPassword();
+			String name = admin.getName();
+			int number = admin.getNumber();
+			String email = admin.getEmail();
+
+			output += String.format("%-10s %-10s %-20s %-10d %-30s\n", userId, password, 
+					name, number, email);
 		}
 		return output;
 	}
 
-	public static void viewAllUsers(ArrayList<Administrator> administrators) {
+	public static void viewAllUsers(ArrayList<Administrator> administrators) { //ella
 		TuitionManagement.setHeader("VIEW ALL USERS");
 		String output = String.format("%-10s %20s %20s %20s\n", "USER ID", "USER NAME", "USER NUMBER", "USER EMAIL");
 		output += retrieveUser(administrators);
 		System.out.println(output);
 	}
 
-	public static boolean deleteUser(ArrayList<Administrator> administrators, String deleteUser) { // weile
+	public static boolean deleteUser(ArrayList<Administrator> administrators, String deleteUser) { // ella
 		boolean deleted = false;
 
 		for (int i = 0; i < administrators.size(); i++) {
