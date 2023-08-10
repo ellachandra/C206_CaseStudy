@@ -57,13 +57,13 @@ public class C206_CaseStudyTest {
 		assertNotNull("Check if there is a valid User arraylist to add to", students);
 		//Given an empty list, after adding 1 item, the size of the list is 1 - normal
 		//The item just added is as the same as the first item of the list
-		TuitionManagement.addAdministrator(administrators, a1);
+		TuitionManagement.addUser(administrators, a1);
 		assertEquals("Check that administrators arrayList size is 1,", 1, administrators.size());
 		assertSame("Check that Administrator is added,", a1, administrators.get(0));
 		
 		//Add another item. test The size of the list is 2? -normal
 		//The item just added is as same as the second item of the list
-		TuitionManagement.addAdministrator(administrators, a2);
+		TuitionManagement.addUser(administrators, a2);
 		assertEquals("Test that Administrator is added,", a2, administrators.get(1));
 		
 	}

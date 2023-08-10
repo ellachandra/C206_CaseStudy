@@ -162,7 +162,7 @@ public class TuitionManagement {
 									
 									//Add a user
 									Administrator ad = inputUser();
-									TuitionManagement.addAdministrator(administrators, ad);
+									TuitionManagement.addUser(administrators, ad);
 									//print success message
 									System.out.println("User added successfully!");
 									
@@ -175,15 +175,7 @@ public class TuitionManagement {
 									TuitionManagement.setHeader("DELETE EXISTING USER");
 									String deleteUser = Helper.readString("Enter userID to delete: ");
 									
-									boolean deleted = false;
-									for (int i = 0; i < administrators.size(); i++) {
-										Administrator a = administrators.get(i);
-										if (a.getUserId().equals(deleteUser)) { //check against list
-											administrators.remove(i); //remove from list
-											deleted = true;
-											break;
-										}
-									}
+									boolean deleted = TuitionManagement.deleteStudent(students, deleteUser);
 									
 									if (deleted == true) { //print message
 										System.out.println("UserID: " + deleteUser + " has been deleted successfully!");
@@ -558,7 +550,7 @@ public class TuitionManagement {
 		
 	}
 	
-	public static void addAdministrator(ArrayList<Administrator> administrators, Administrator ad) {
+	public static void addUser(ArrayList<Administrator> administrators, Administrator ad) {
 		Administrator user;
 		for(int i = 0; i < administrators.size(); i++) {
 			user = administrators.get(i);
@@ -585,13 +577,7 @@ public class TuitionManagement {
 		
 	}
 	
-	public static String retrieveUser(ArrayList<Administrator> administrators) {
-		String output = "";
-			for (int i = 0; i < administrators.size(); i++) {
-			      output += String.format("%-84s\n", administrators.get(i).toString());
-		}
-		return output;
-	}
+	
 
 	//Course stuff
 
@@ -669,11 +655,33 @@ public class TuitionManagement {
 		System.out.println(output);
 	}
 	
+	public static String retrieveUser(ArrayList<Administrator> administrators) {
+		String output = "";
+			for (int i = 0; i < administrators.size(); i++) {
+			      output += String.format("%-84s\n", administrators.get(i).toString());
+		}
+		return output;
+	}
+	
 	public static void viewAllUsers(ArrayList<Administrator> administrators) { 
 		TuitionManagement.setHeader("VIEW ALL USERS");
 		String output = String.format("%-10s %20s %20s %20s\n", "USER ID", "USER NAME", "USER NUMBER", "USER EMAIL");
 		output += retrieveUser(administrators);	
 		System.out.println(output);
+	}
+	
+	public static boolean deleteUser(ArrayList<Administrator> administrators, String deleteUser) { //weile
+		boolean deleted = false;
+		
+		for (int i = 0; i < administrators.size(); i++) {
+			Administrator admin = administrators.get(i);
+			if (admin.getUserId().equals(deleteUser)) { //check against list
+				administrators.remove(i); //remove from list
+				deleted = true;
+				break;
+			}
+		}
+		return deleted;
 	}
 	
 	public static boolean deleteStudent(ArrayList<Student> students, String deleteUser) { //weile
