@@ -6,7 +6,7 @@
  * @author jiaan
  *
  */
-public class Course {
+public class Course {//jia an
 	private String courseCode;
 	private String courseTitle;
 	private String courseDesc;

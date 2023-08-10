@@ -8,7 +8,7 @@
  */
 
 //edited by ella add contact number
-public class User {
+public class User {//jia an
 	private String userId;
 	private String password;
     private String name;

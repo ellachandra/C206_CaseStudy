@@ -59,7 +59,7 @@ public class TuitionManagement {
 		// TODO Auto-generated method stub
 		// Administrator admin = new Administrator("admin123","p4ssword", "John Doe", "john.doe@example.com");
 		 
-		ArrayList<Administrator> administrators = new ArrayList<>();
+		ArrayList<Administrator> administrators = new ArrayList<>();//jia an
         administrators.add(new Administrator("admin1", "admin123", "Administrator 1", 91122334, "admin1@example.com"));
         administrators.add(new Administrator("admin2", "admin456", "Administrator 2", 92233445, "admin2@example.com"));
         administrators.add(new Administrator("admin3", "admin789", "Administrator 3", 93344556, "admin3@example.com"));
@@ -71,7 +71,7 @@ public class TuitionManagement {
         students.add(new Student("student3", "student789", "Student 3", 81322334, "student3@example.com", "Java experience"));
         students.add(new Student("student4", "studentabc", "Student 4", 81422334, "student4@example.com", "Java experience"));
         
-		ArrayList<Course> courseList = new ArrayList<Course>();
+		ArrayList<Course> courseList = new ArrayList<Course>();//jia an
 		Course c1 = new Course("CS101", "Java Corp", "The Journey of Java", "Programming experience",20, "Mon, Wed 10:00 AM - 11:30 AM");
 		//added 1 more course to show eligibility example - ella
 		Course c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "Java experience",40, "Tue, Thur 11:00 AM - 12:30 PM");
@@ -120,7 +120,7 @@ public class TuitionManagement {
 				option = Helper.readInt("Enter an option > ");
 			
 			
-			if (option == ADMIN_LOGIN) {
+			if (option == ADMIN_LOGIN) {//jia an
 				// Code to Login for admin
 				boolean loginSuccessful = false;
 				String inputUserId = Helper.readString("Enter your userID: ");
@@ -139,7 +139,7 @@ public class TuitionManagement {
 	                System.out.println("Invalid userID or password. Please try again.");
 	            }
 				
-				if(loginSuccessful == true) {
+				if(loginSuccessful == true) {//jia an
 					int optionA = 0;
 					while (optionA != ADMIN_OPTION_QUIT) {
 					TuitionManagement.adminmenu();
@@ -149,7 +149,7 @@ public class TuitionManagement {
 							
 							int choice = 0;
 							
-							while (choice != ADMIN_USER_QUIT) {
+							while (choice != ADMIN_USER_QUIT) {//jia an
 								
 								TuitionManagement.userTypeMenu(); //menu
 								choice = Helper.readInt("Enter an option > ");
@@ -184,14 +184,14 @@ public class TuitionManagement {
 							}
 							
 						}
-						else if(optionA == ADMIN_OPTION_COURSE) {
+						else if(optionA == ADMIN_OPTION_COURSE) {//jia an
 						//code for course
 							int optionC = 0;
-							while(optionC != ADMIN_COURSE_QUIT) {
+							while(optionC != ADMIN_COURSE_QUIT) {//jia an
 									TuitionManagement.courseTypeMenu();
 									optionC = Helper.readInt("Enter an option > ");
 						
-									if(optionC == ADMIN_COURSE_ADD) {
+									if(optionC == ADMIN_COURSE_ADD) {//jia an
 										TuitionManagement.setHeader("ADD A NEW COURSE");
 							
 										String courseId = Helper.readString("Enter Course ID: ");
@@ -210,7 +210,7 @@ public class TuitionManagement {
 										TuitionManagement.addCourse(courseList, newCourse);
 										// Print a success message
 										System.out.println("Course added successfully!");
-									} else if(optionC == ADMIN_COURSE_VIEW) {
+									} else if(optionC == ADMIN_COURSE_VIEW) {//jia an
 										TuitionManagement.setHeader("VIEW ALL COURSE");
 										System.out.println("ALL COURSES:");
 										Helper.line(120, "-");
@@ -234,7 +234,7 @@ public class TuitionManagement {
 									TuitionManagement.viewAllCourses(courseList);
 									Helper.line(180, "-");
 									}
-									else if(optionC == ADMIN_COURSE_DELETE) {
+									else if(optionC == ADMIN_COURSE_DELETE) {//jia an
 										TuitionManagement.setHeader("DELETE ALL COURSE");
 										String courseIdToDelete = Helper.readString("Enter the Course ID to delete:");
 
@@ -465,7 +465,7 @@ public class TuitionManagement {
 	// ================================ OTHER METHODS
 	// =======================================================
 
-	public static void adminmenu() {
+	public static void adminmenu() {//jia an not so important
 		TuitionManagement.setHeader("Tuition Management App");
 		System.out.println("1. User Management");
 		System.out.println("2. Course Management");
@@ -478,7 +478,7 @@ public class TuitionManagement {
 
 	}
 
-	public static void loginmenu() {
+	public static void loginmenu() {// jia an
 		TuitionManagement.setHeader("WELCOME TO TUITION MANAGEMENT!");
 		System.out.println("1. Admin Login");
 		System.out.println("2. Student Login");
@@ -489,13 +489,13 @@ public class TuitionManagement {
 
 	}
 
-	public static void setHeader(String header) {
+	public static void setHeader(String header) {// jia an
 		Helper.line(80, "-");
 		System.out.println(header);
 		Helper.line(80, "-");
 	}
 
-	public static void courseTypeMenu() {
+	public static void courseTypeMenu() {// jia an
 		TuitionManagement.setHeader("COURSE MANAGEMENT");
 		System.out.println("1. Add a new Course");
 		System.out.println("2. View all Courses");
@@ -607,7 +607,7 @@ public class TuitionManagement {
 
 	// -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public static void addCourse(ArrayList<Course> courseList, Course course) {
+	public static void addCourse(ArrayList<Course> courseList, Course course) {//jia an
 		for (Course existingCourse : courseList) {
 			if (existingCourse.getCourseCode().equalsIgnoreCase(course.getCourseCode())) {
 				return; // Course with the same code already exists
@@ -622,7 +622,7 @@ public class TuitionManagement {
 		courseList.add(course);
 	}
 
-	public static String retrieveCourses(ArrayList<Course> courseList) {
+	public static String retrieveCourses(ArrayList<Course> courseList) {//jia an
 		String output = "";
 		for (Course course : courseList) {
 			String courseId = course.getCourseCode();
@@ -638,12 +638,12 @@ public class TuitionManagement {
 		return output;
 	}
 
-	public static void viewAllCourses(ArrayList<Course> courseList) {
+	public static void viewAllCourses(ArrayList<Course> courseList) {//jia an
 		String output = retrieveCourses(courseList);
 		System.out.println(output);
 	}
 
-	public static boolean deleteCourse(ArrayList<Course> courseList, String courseCodeToDelete) {
+	public static boolean deleteCourse(ArrayList<Course> courseList, String courseCodeToDelete) {//jia an
 		boolean deleted = false;
 
 		for (int i = 0; i < courseList.size(); i++) {
