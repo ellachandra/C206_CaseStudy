@@ -552,7 +552,7 @@ public class TuitionManagement {
 		Helper.line(80, "-");
 	}
 
-	public static Student findStudentById(List<Student> students, String studentId) {//weile
+	public static Student findStudentById(List<Student> students, String studentId) {//ella
 		for (Student student : students) {
 			if (student.getUserId().equals(studentId)) {
 				return student;
