@@ -217,7 +217,8 @@ public class TuitionManagement {
 										TuitionManagement.setHeader("VIEW ALL COURSE");
 										System.out.println("ALL COURSES:");
 										Helper.line(120, "-");
-										System.out.println("Course Course\tCourse Name\t\tDescription\t\t\tSchedule"); //need to add eligibility
+										System.out.println(
+							                      "Course Course\tCourse Name\t\tDescription\t\t\tEligibility\tAvailability\t\tSchedule");
 										Helper.line(120, "-");
 //										for (Course course : courseList) {
 //										String courseId = course.getCourseCode();
