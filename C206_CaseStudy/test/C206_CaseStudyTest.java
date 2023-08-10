@@ -59,7 +59,7 @@ public class C206_CaseStudyTest {
 	// test add user(administrator)
 	public void testAddUser() { //ella
 		// Item list is not null, so that can add a new item - boundary
-		assertNotNull("Check if there is a valid User arraylist to add to", students);
+		assertNotNull("Check if there is a valid User arraylist to add to", administrators);
 		// Given an empty list, after adding 1 item, the size of the list is 1 - normal
 		// The item just added is as the same as the first item of the list
 		TuitionManagement.addUser(administrators, a1);
@@ -76,7 +76,7 @@ public class C206_CaseStudyTest {
 	@Test
 	public void testAddStudent() { // weile
 		// Item list is not null, so that can add a new item - boundary
-		assertNotNull("Check if there is a valid User arraylist to add to", administrators);
+		assertNotNull("Check if there is a valid User arraylist to add to", students);
 		// Given an empty list, after adding 1 item, the size of the list is 1 - normal
 		// The item just added is as the same as the first item of the list
 		TuitionManagement.addStudent(students, s1);
