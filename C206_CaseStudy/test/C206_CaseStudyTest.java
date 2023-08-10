@@ -95,7 +95,7 @@ public class C206_CaseStudyTest {
 	}
 
 	@Test
-	public void testAddCourse() {
+	public void testAddCourse() {//jia an
 		// Item list is not null, so that can add a new item - boundary
 		assertNotNull("Check if there is a valid Course arraylist to add to", courseList);
 
@@ -194,7 +194,7 @@ public class C206_CaseStudyTest {
 	}
 
 	@Test
-	public void testRetrieveCourse() {
+	public void testRetrieveCourse() {//jia an
 		// Test if Item list is not null but empty - boundary
 		assertNotNull("Test if there is valid Course arraylist to retrieve the item", courseList);
 
@@ -328,7 +328,7 @@ public class C206_CaseStudyTest {
 	}
 
 	@Test
-	public void testDeleteCourse() {
+	public void testDeleteCourse() {//jia an
 
 		// Test if Item list is not null but empty - boundary
 		assertNotNull("Test if there is valid Course arraylist to delete a course", courseList);
