@@ -302,7 +302,7 @@ public class C206_CaseStudyTest {
 		testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student2", "Student 2", 81222334,
 				"student2@example.com");
 
-		// Test if the output is empty
+	
 		assertEquals(
 				"Test that the expected output string is same as the list of students retrieved from the SourceCentre",
 				testOutput, allStudent);
