@@ -2,12 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Student extends User{
+public class Student extends User{ //weile
 	private List<Attendance> attendanceRecords;
 	private String educationHistory; // jacky
 
 	public Student(String userId, String password, String name, int number, String email, String educationHistory) {
-        super(userId,password, name, number, email);
+        super(userId,password, name, number, email); //weile
         this.attendanceRecords = new ArrayList<>();
         this.educationHistory = educationHistory; // jacky
     }

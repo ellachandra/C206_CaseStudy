@@ -65,7 +65,7 @@ public class TuitionManagement {
         administrators.add(new Administrator("admin3", "admin789", "Administrator 3", 93344556, "admin3@example.com"));
         administrators.add(new Administrator("admin4", "adminabc", "Administrator 4", 94455667, "admin4@example.com"));
 
-        ArrayList<Student> students = new ArrayList<>();
+        ArrayList<Student> students = new ArrayList<>(); //weile
         students.add(new Student("student1", "student123", "Student 1", 81122334, "student1@example.com", "Programming experience"));
         students.add(new Student("student2", "student456", "Student 2", 81222334, "student2@example.com", "Programming experience"));
         students.add(new Student("student3", "student789", "Student 3", 81322334, "student3@example.com", "Java experience"));
@@ -254,11 +254,11 @@ public class TuitionManagement {
 						else if (optionA == ADMIN_OPTION_STUDENT) { //Wei Le
 							//code for Student Management
 							int optionD = 0;
-							while(optionD != ADMIN_STUDENT_QUIT) {
+							while(optionD != ADMIN_STUDENT_QUIT) { //weile
 									TuitionManagement.studentTypeMenu();
 									optionD = Helper.readInt("Enter an option > ");
 						
-									if(optionD == ADMIN_STUDENT_ADD) {
+									if(optionD == ADMIN_STUDENT_ADD) { //weile
 										TuitionManagement.setHeader("ADD A NEW STUDENT");
 							
 										String studentID = Helper.readString("Enter User ID: ");
@@ -277,7 +277,7 @@ public class TuitionManagement {
 										// Print a success message
 										System.out.println("Student added successfully!");
 							
-									}else if(optionD == ADMIN_STUDENT_VIEW) {
+									}else if(optionD == ADMIN_STUDENT_VIEW) { //weile
 										TuitionManagement.setHeader("VIEW ALL STUDENT");
 										System.out.println("ALL STUDENTS:");
 										Helper.line(120, "-");
@@ -286,7 +286,7 @@ public class TuitionManagement {
 										TuitionManagement.viewAllStudent(students);
 										Helper.line(120, "-");
 									}
-									else if(optionD == ADMIN_COURSE_DELETE) {
+									else if(optionD == ADMIN_COURSE_DELETE) { //weile
 										TuitionManagement.setHeader("DELETE EXISTING USER");
 										String deleteUser = Helper.readString("Enter studentID to delete: ");
 										
@@ -516,7 +516,7 @@ public class TuitionManagement {
 
 	}
 
-	public static void studentTypeMenu() {
+	public static void studentTypeMenu() { //weile
 		TuitionManagement.setHeader("STUDENT MANAGEMENT");
 		System.out.println("1. Add a new Student");
 		System.out.println("2. View all Students");
@@ -871,4 +871,4 @@ public class TuitionManagement {
 	}
 	
 
-}// end of all code
+}
