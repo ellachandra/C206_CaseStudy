@@ -20,13 +20,12 @@ public class TuitionManagement {
 	private static final int ADMIN_OPTION_FEE = 4;// jia an
 	private static final int ADMIN_OPTION_ENROLMENT = 5;// jia an
 	private static final int ADMIN_OPTION_ATTENDANCE = 6; // jia an
-	
-	
+
 	private static final int ADMIN_LOGIN = 1; // jia an
-	private static final int STUDENT_LOGIN= 2; // jia an
+	private static final int STUDENT_LOGIN = 2; // jia an
 	private static final int TEACHER_LOGIN = 3; // jia an
 	private static final int NO_LOGIN = 4; // jia an
-	
+
 	private static final int ADMIN_COURSE_ADD = 1; // jia an
 	private static final int ADMIN_COURSE_VIEW = 2; // jia an
 	private static final int ADMIN_COURSE_DELETE = 3; // jia an
@@ -37,24 +36,22 @@ public class TuitionManagement {
 	private static final int ADMIN_USER_VIEW = 2; // ella
 	private static final int ADMIN_USER_DELETE = 3; // ella
 	private static final int ADMIN_USER_QUIT = 4; // ella
-	
+
 	private static final int ADMIN_STUDENT_ADD = 1; // weile
 	private static final int ADMIN_STUDENT_VIEW = 2; // weile
 	private static final int ADMIN_STUDENT_DELETE = 3; // weile
 	private static final int ADMIN_STUDENT_QUIT = 4; // weile
-	
+
 	private static final int ADMIN_ATTENDANCE_ADD = 1; // ella
 	private static final int ADMIN_ATTENDANCE_VIEW = 2; // ella
 	private static final int ADMIN_ATTENDANCE_DELETE = 3; // ella
 	private static final int ADMIN_ATTENDANCE_QUIT = 4; // ella
-	
-	private static final int ADMIN_FEE_ADD = 1;//donovan
-	private static final int ADMIN_FEE_VIEW = 2;//donovan
-	private static final int ADMIN_FEE_DELETE = 3;//donovan
-	private static final int ADMIN_FEE_QUIT = 4;//donovan
 
-	
-	
+	private static final int ADMIN_FEE_ADD = 1;// donovan
+	private static final int ADMIN_FEE_VIEW = 2;// donovan
+	private static final int ADMIN_FEE_DELETE = 3;// donovan
+	private static final int ADMIN_FEE_QUIT = 4;// donovan
+
 	/**
 	 * @param args
 	 */
@@ -69,15 +66,15 @@ public class TuitionManagement {
         administrators.add(new Administrator("admin4", "adminabc", "Administrator 4", 94455667, "admin4@example.com"));
 
         ArrayList<Student> students = new ArrayList<>();
-        students.add(new Student("student1", "student123", "Student 1", 81122334, "student1@example.com"));
-        students.add(new Student("student2", "student456", "Student 2", 81222334, "student2@example.com"));
-        students.add(new Student("student3", "student789", "Student 3", 81322334, "student3@example.com"));
-        students.add(new Student("student4", "studentabc", "Student 4", 81422334, "student4@example.com"));
+        students.add(new Student("student1", "student123", "Student 1", 81122334, "student1@example.com", "Programming experience"));
+        students.add(new Student("student2", "student456", "Student 2", 81222334, "student2@example.com", "Programming experience"));
+        students.add(new Student("student3", "student789", "Student 3", 81322334, "student3@example.com", "Java experience"));
+        students.add(new Student("student4", "studentabc", "Student 4", 81422334, "student4@example.com", "Java experience"));
         
 		ArrayList<Course> courseList = new ArrayList<Course>();
-		Course c1 = new Course("CS101", "Java Corp", "The Journey of Java", "",20, "Mon, Wed 10:00 AM - 11:30 AM");
+		Course c1 = new Course("CS101", "Java Corp", "The Journey of Java", "Programming experience",20, "Mon, Wed 10:00 AM - 11:30 AM");
 		//added 1 more course to show eligibility example - ella
-		Course c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "Requires CS101",40, "Tue, Thur 11:00 AM - 12:30 PM");
+		Course c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "Java experience",40, "Tue, Thur 11:00 AM - 12:30 PM");
 		courseList.add(c1);
 		courseList.add(c2);//ella
 		
@@ -85,9 +82,9 @@ public class TuitionManagement {
 		Fees.add(new Fee("A123","tuition fee","8/9/2023",100.60));
 		
 		
-		
-		
-		
+		ArrayList<Enrolment> enrolmentList = new ArrayList<Enrolment>();
+		Enrolment e1 = new Enrolment("Student 1", "CS101");
+		enrolmentList.add(e1);
 		
 		// Find a student by their ID
 		Student student1 = findStudentById(students, "student1");
@@ -269,10 +266,10 @@ public class TuitionManagement {
 										String studentName = Helper.readString("Enter User Name: ");
 										int studentNumber = Helper.readInt("Enter User Contact Number: ");
 										String studentEmail = Helper.readString("Enter User Email: ");
-										
+										String educationHistory = Helper.readString("Enter your past education experience(Programming experience/Java experience): ");
 
 										// Create a new Student object with user input
-										Student newStudent = new Student(studentID, studentPassword, studentName, studentNumber, studentEmail);
+										Student newStudent = new Student(studentID, studentPassword, studentName, studentNumber, studentEmail, educationHistory);
 
 										// Add the new student to the ArrayList
 										TuitionManagement.addStudent(students, newStudent);
@@ -357,6 +354,21 @@ public class TuitionManagement {
 						}
 						else if (optionA == ADMIN_OPTION_ENROLMENT) {
 							//code for Enrollment Management
+							int choice = 0;
+							while (choice != 4) {
+								TuitionManagement.enrolmentTypeMenu();
+								choice = Helper.readInt("Enter an option: ");
+
+								if (choice == 1) {
+									addEnrolment(courseList, students, enrolmentList);
+								} else if (choice == 2) {
+									viewEnrolment(enrolmentList);
+								} else if (choice == 3) {
+									deleteEnrolment(enrolmentList);
+								} else {
+									System.out.println("Invalid Option!");
+								}
+							}
 						}
 						else if(optionA == ADMIN_OPTION_ATTENDANCE) { //ella
 							//code for Attendance
@@ -449,40 +461,41 @@ public class TuitionManagement {
 	
 
 		}
-	
-	
-	//================================ OTHER METHODS =======================================================
-	
-	 public static void adminmenu() {
-			TuitionManagement.setHeader("Tuition Management App");
-			System.out.println("1. User Management");
-			System.out.println("2. Course Management");
-			System.out.println("3. Student Management");
-			System.out.println("4. Fee Management");
-			System.out.println("5. Enrolment Management");
-			System.out.println("6. Attendence Management");
-			System.out.println("7. Quit");
-			Helper.line(80, "-");
 
-		}
-	 public static void loginmenu() {
-			TuitionManagement.setHeader("WELCOME TO TUITION MANAGEMENT!");
-			System.out.println("1. Admin Login");
-			System.out.println("2. Student Login");
-			System.out.println("3. Teacher Login");
-			System.out.println("4. Leave... ");
-			
-			Helper.line(80, "-");
+	// ================================ OTHER METHODS
+	// =======================================================
 
-		}
+	public static void adminmenu() {
+		TuitionManagement.setHeader("Tuition Management App");
+		System.out.println("1. User Management");
+		System.out.println("2. Course Management");
+		System.out.println("3. Student Management");
+		System.out.println("4. Fee Management");
+		System.out.println("5. Enrolment Management");
+		System.out.println("6. Attendence Management");
+		System.out.println("7. Quit");
+		Helper.line(80, "-");
 
+	}
+
+	public static void loginmenu() {
+		TuitionManagement.setHeader("WELCOME TO TUITION MANAGEMENT!");
+		System.out.println("1. Admin Login");
+		System.out.println("2. Student Login");
+		System.out.println("3. Teacher Login");
+		System.out.println("4. Leave... ");
+
+		Helper.line(80, "-");
+
+	}
 
 	public static void setHeader(String header) {
 		Helper.line(80, "-");
 		System.out.println(header);
 		Helper.line(80, "-");
 	}
-	public static void courseTypeMenu() { 
+
+	public static void courseTypeMenu() {
 		TuitionManagement.setHeader("COURSE MANAGEMENT");
 		System.out.println("1. Add a new Course");
 		System.out.println("2. View all Courses");
@@ -490,27 +503,29 @@ public class TuitionManagement {
 		System.out.println("4. Update an existing Course");
 		System.out.println("5. Quit ");
 		Helper.line(80, "-");
-		
+
 	}
-	public static void userTypeMenu() { 
+
+	public static void userTypeMenu() {
 		TuitionManagement.setHeader("USER MANAGEMENT");
 		System.out.println("1. Add a new user");
 		System.out.println("2. View all user");
 		System.out.println("3. Delete an existing user");
 		System.out.println("4. Quit");
 		Helper.line(80, "-");
-		
+
 	}
-	public static void studentTypeMenu() { 
+
+	public static void studentTypeMenu() {
 		TuitionManagement.setHeader("STUDENT MANAGEMENT");
 		System.out.println("1. Add a new Student");
 		System.out.println("2. View all Students");
 		System.out.println("3. Delete an existing Student");
 		System.out.println("4. Quit");
 		Helper.line(80, "-");
-		
+
 	}
-	
+
 	public static void attendanceTypeMenu() {
 		TuitionManagement.setHeader("ATTENDANCE MANAGEMENT");
 		System.out.println("1. Add a new Attendance");
@@ -519,7 +534,7 @@ public class TuitionManagement {
 		System.out.println("4. Quit");
 		Helper.line(80, "-");
 	}
-	
+
 	public static void feeTypeMenu() {
 		TuitionManagement.setHeader("FEE MANAGEMENT");
 		System.out.println("1. Add a new fee");
@@ -529,60 +544,68 @@ public class TuitionManagement {
 		Helper.line(80, "-");
 	}
 	
-	public static Student findStudentById(List<Student> students, String studentId) {
-	    for (Student student : students) {
-	        if (student.getUserId().equals(studentId)) {
-	            return student;
-	        }
-	    }
-	    return null; // Return null if student is not found
+	public static void enrolmentTypeMenu() {
+		TuitionManagement.setHeader("ENROLMENT MANAGEMENT");
+		System.out.println("1. Enrol student");
+		System.out.println("2. View all Enrolment");
+		System.out.println("3. Delete an existing Enrolment");
+		System.out.println("4. Quit");
+		Helper.line(80, "-");
 	}
-	
+
+	public static Student findStudentById(List<Student> students, String studentId) {
+		for (Student student : students) {
+			if (student.getUserId().equals(studentId)) {
+				return student;
+			}
+		}
+		return null; // Return null if student is not found
+	}
+
 	public static Administrator inputUser() {
-		
+
 		String userID = Helper.readString("Enter User ID: ");
 		String userPassword = Helper.readString("Enter a password: ");
 		String userName = Helper.readString("Enter User Name: ");
 		int userNumber = Helper.readInt("Enter User Contact Number: ");
 		String userEmail = Helper.readString("Enter User Email: ");
 
-		Administrator ad= new Administrator(userID, userPassword, userName, userNumber, userEmail);
+		Administrator ad = new Administrator(userID, userPassword, userName, userNumber, userEmail);
 		return ad;
-		
+
 	}
-	
+
 	public static void addUser(ArrayList<Administrator> administrators, Administrator ad) {
 		Administrator user;
-		for(int i = 0; i < administrators.size(); i++) {
+		for (int i = 0; i < administrators.size(); i++) {
 			user = administrators.get(i);
-			if (user.getUserId().equalsIgnoreCase(ad.getUserId()) )
+			if (user.getUserId().equalsIgnoreCase(ad.getUserId()))
 				return;
 		}
-		if ((ad.getUserId().isEmpty()) || (ad.getEmail().isEmpty()) ) {
+		if ((ad.getUserId().isEmpty()) || (ad.getEmail().isEmpty())) {
 			return;
 		}
 		administrators.add(ad);
-		
+
 	}
-	public static void addStudent(ArrayList<Student> students, Student stud) { //weile
+
+	public static void addStudent(ArrayList<Student> students, Student stud) { // weile
 		Student user;
-		for(int i = 0; i < students.size(); i++) {
+		for (int i = 0; i < students.size(); i++) {
 			user = students.get(i);
-			if (user.getUserId().equalsIgnoreCase(stud.getUserId()) )
+			if (user.getUserId().equalsIgnoreCase(stud.getUserId()))
 				return;
 		}
-		if ((stud.getUserId().isEmpty()) || (stud.getEmail().isEmpty()) ) {
+		if ((stud.getUserId().isEmpty()) || (stud.getEmail().isEmpty())) {
 			return;
 		}
 		students.add(stud);
-		
+
 	}
-	
-	
 
-	//Course stuff
+	// Course stuff
 
-	//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	public static void addCourse(ArrayList<Course> courseList, Course course) {
 		for (Course existingCourse : courseList) {
@@ -591,169 +614,261 @@ public class TuitionManagement {
 			}
 		}
 
-		if (course.getCourseCode().isEmpty() || course.getCourseTitle().isEmpty() || 
-			    course.getCourseDesc().isEmpty() ||  
-			    course.getCourseAvailability() <= 0 || course.getSchedule().isEmpty()) {
-			    return; // Course information is incomplete or invalid
-			}
+		if (course.getCourseCode().isEmpty() || course.getCourseTitle().isEmpty() || course.getCourseDesc().isEmpty()
+				|| course.getCourseAvailability() <= 0 || course.getSchedule().isEmpty()) {
+			return; // Course information is incomplete or invalid
+		}
 
 		courseList.add(course);
 	}
-	public static String retrieveCourses(ArrayList<Course> courseList) {
-	    String output = "";
-	    for (Course course : courseList) {
-	        String courseId = course.getCourseCode();
-	        String courseTitle = course.getCourseTitle();
-	        String courseDescription = course.getCourseDesc();
-	        String eligibility = course.getCourseEligibil();
-	        int availability = course.getCourseAvailability();
-	        String schedule = course.getSchedule();
 
-	        output += String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n",
-	                courseId, courseTitle, courseDescription, eligibility, availability, schedule);
-	    }
-	    return output;
+	public static String retrieveCourses(ArrayList<Course> courseList) {
+		String output = "";
+		for (Course course : courseList) {
+			String courseId = course.getCourseCode();
+			String courseTitle = course.getCourseTitle();
+			String courseDescription = course.getCourseDesc();
+			String eligibility = course.getCourseEligibil();
+			int availability = course.getCourseAvailability();
+			String schedule = course.getSchedule();
+
+			output += String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n", courseId, courseTitle,
+					courseDescription, eligibility, availability, schedule);
+		}
+		return output;
 	}
+
 	public static void viewAllCourses(ArrayList<Course> courseList) {
-	    String output = retrieveCourses(courseList);
-	    System.out.println(output);
+		String output = retrieveCourses(courseList);
+		System.out.println(output);
 	}
 
 	public static boolean deleteCourse(ArrayList<Course> courseList, String courseCodeToDelete) {
-	    boolean deleted = false;
+		boolean deleted = false;
 
-	    for (int i = 0; i < courseList.size(); i++) {
-	        Course course = courseList.get(i);
-	        if (course.getCourseCode().equals(courseCodeToDelete)) {
-	            courseList.remove(i);
-	            deleted = true;
-	            break;
-	        }
-	    }
+		for (int i = 0; i < courseList.size(); i++) {
+			Course course = courseList.get(i);
+			if (course.getCourseCode().equals(courseCodeToDelete)) {
+				courseList.remove(i);
+				deleted = true;
+				break;
+			}
+		}
 
-	    return deleted;
+		return deleted;
 	}
-	//-----------------------------------------------------------------------------------------------------------------------------------------------------------
-	
-	public static String retrieveStudent(ArrayList<Student> students) { //weile
+	// -----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	public static String retrieveStudent(ArrayList<Student> students) { // weile
 		String output = "";
 		for (Student student : students) {
 			String studentId = student.getUserId();
 			String studentName = student.getName();
-			//add eligibility
+			// add eligibility
 			int studentNumber = student.getNumber();
 			String studentEmail = student.getEmail();
 
-			output += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", studentId, studentName, studentNumber, studentEmail);
+			output += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", studentId, studentName, studentNumber,
+					studentEmail);
 		}
-		
+
 		return output;
 	}
-	
-	public static void viewAllStudent(ArrayList<Student> students) { //weile
+
+	public static void viewAllStudent(ArrayList<Student> students) { // weile
 		// write your code here
 		String output = retrieveStudent(students);
 		System.out.println(output);
 	}
-	
+
 	public static String retrieveUser(ArrayList<Administrator> administrators) {
 		String output = "";
-			for (int i = 0; i < administrators.size(); i++) {
-			      output += String.format("%-84s\n", administrators.get(i).toString());
+		for (int i = 0; i < administrators.size(); i++) {
+			output += String.format("%-84s\n", administrators.get(i).toString());
 		}
 		return output;
 	}
-	
-	public static void viewAllUsers(ArrayList<Administrator> administrators) { 
+
+	public static void viewAllUsers(ArrayList<Administrator> administrators) {
 		TuitionManagement.setHeader("VIEW ALL USERS");
 		String output = String.format("%-10s %20s %20s %20s\n", "USER ID", "USER NAME", "USER NUMBER", "USER EMAIL");
-		output += retrieveUser(administrators);	
+		output += retrieveUser(administrators);
 		System.out.println(output);
 	}
-	
-	public static boolean deleteUser(ArrayList<Administrator> administrators, String deleteUser) { //weile
+
+	public static boolean deleteUser(ArrayList<Administrator> administrators, String deleteUser) { // weile
 		boolean deleted = false;
-		
+
 		for (int i = 0; i < administrators.size(); i++) {
 			Administrator admin = administrators.get(i);
-			if (admin.getUserId().equals(deleteUser)) { //check against list
-				administrators.remove(i); //remove from list
+			if (admin.getUserId().equals(deleteUser)) { // check against list
+				administrators.remove(i); // remove from list
 				deleted = true;
 				break;
 			}
 		}
 		return deleted;
 	}
-	
-	public static boolean deleteStudent(ArrayList<Student> students, String deleteUser) { //weile
+
+	public static boolean deleteStudent(ArrayList<Student> students, String deleteUser) { // weile
 		boolean deleted = false;
-		
+
 		for (int i = 0; i < students.size(); i++) {
 			Student s = students.get(i);
-			if (s.getUserId().equals(deleteUser)) { //check against list
-				students.remove(i); //remove from list
+			if (s.getUserId().equals(deleteUser)) { // check against list
+				students.remove(i); // remove from list
 				deleted = true;
 				break;
 			}
 		}
 		return deleted;
-			
-		
+
 	}
-	
-	public static void addFee(ArrayList<Fee> Fees, Fee FEE) { //donovan
+
+	public static void addFee(ArrayList<Fee> Fees, Fee FEE) { // donovan
 		Fee user;
-		for(int i = 0; i < Fees.size(); i++) {
+		for (int i = 0; i < Fees.size(); i++) {
 			user = Fees.get(i);
-			if (user.getFeeID().equalsIgnoreCase(FEE.getFeeID()) )
+			if (user.getFeeID().equalsIgnoreCase(FEE.getFeeID()))
 				return;
 		}
-		if ((FEE.getFeeID().isEmpty()) ) {
+		if ((FEE.getFeeID().isEmpty())) {
 			return;
 		}
 		Fees.add(FEE);
 	}
-	
-	public static String retrieveFee(ArrayList<Fee> Fees) { //donovan
+
+	public static String retrieveFee(ArrayList<Fee> Fees) { // donovan
 		String output = "";
 		for (Fee fee : Fees) {
 			String FeeID = fee.getFeeID();
 			String FeeType = fee.getFeeType();
-			//add eligibility
+			// add eligibility
 			String duedate = fee.getDueDate();
-			double amount= fee.getAmount();
+			double amount = fee.getAmount();
 
 			output += String.format("%-12s\t %-20s\t %-16s\t %-10.2f%n", FeeID, FeeType, duedate, amount);
 		}
-		
+
 		return output;
-	}	
-	
-	public static void viewAllFee(ArrayList<Fee> Fees) { //donovan
+	}
+
+	public static void viewAllFee(ArrayList<Fee> Fees) { // donovan
 		// write your code here
 		String output = retrieveFee(Fees);
 		System.out.println(output);
 	}
-	
-	public static boolean deleteFee(ArrayList<Fee> Fees, String deleteFee) { //donovan
+
+	public static boolean deleteFee(ArrayList<Fee> Fees, String deleteFee) { // donovan
 		boolean deleted = false;
-		
+
 		for (int i = 0; i < Fees.size(); i++) {
 			Fee f = Fees.get(i);
-			if (f.getFeeID().equals(deleteFee)) { //check against list
-				Fees.remove(i); //remove from list
+			if (f.getFeeID().equals(deleteFee)) { // check against list
+				Fees.remove(i); // remove from list
 				deleted = true;
 				break;
 			}
 		}
 		return deleted;
-			
+
+	}
+	
+	// ---------------------- ADD ENROLMENT -----------	
+	public static void addEnrolment(ArrayList<Course> courseList, ArrayList<Student> students,
+			ArrayList<Enrolment> enrolmentList) {
+		String studentName = Helper.readString("Enter Student Name: ");
+		String courseCode = Helper.readString("Enter the Course Code you wish to enrol the student: ");
+		Enrolment e = new Enrolment(studentName, courseCode);
+		
+		boolean added = false;
+		for (Course C : courseList) {
+			if (e.getCourseCode() == C.getCourseCode()) {
+				for (Student S : students) {
+					if (e.getStudentName() == S.getName()) {
+						if (C.getCourseEligibil() == "" || S.getEducationHistory() == C.getCourseEligibil()) {
+							added = doAddEnrolment(enrolmentList, e);
+						}
+					}
+				}
+			}
+		}
+		
+		if (added) {
+			System.out.println("Enrolment created!");
+		}else {
+			System.out.println("Invalid student name or course code!");
+		}
+	}
+
+	public static boolean doAddEnrolment(ArrayList<Enrolment> enrolmentList, Enrolment e) {
+		// no duplication in list
+		for(Enrolment E: enrolmentList) {
+			if(e.getStudentName() == E.getStudentName()) {
+				return false;
+			}
+		}
+		
+		// make sure its not empty
+		if((e.getStudentName().isEmpty()) || (e.getCourseCode().isEmpty())) {
+			return false;
+		}
+		enrolmentList.add(e);
+		return true;
 		
 	}
 	
+	// --------------------------- VIEW ENROLMENT
+	// --------------------------------------------------
 	
+	public static String retrieveAllEnrolment(ArrayList<Enrolment> enrolmentList) {
+		String output = "";
+
+		for (Enrolment E : enrolmentList) {
+			output += String.format("%-15s %-10s\n", E.getStudentName(), E.getCourseCode());
+		}
+		return output;
+	}
+
+	public static void viewEnrolment(ArrayList<Enrolment> enrolmentList) {
+		String output = String.format("%-15s %-10s\n", "Student Name", "Course Code");
+
+		setHeader("VIEW ENROLMENT");
+		output += retrieveAllEnrolment(enrolmentList);
+		System.out.println(output);
+
+	}
+
+	// ---------------------------- DELETE ENROLMENT
+	// --------------------------------------------------------
+
+	public static void deleteEnrolment(ArrayList<Enrolment> enrolmentList) {
+		String deleteStudent = Helper.readString("Enter the student name of the enrolment you would like to delete: ");
+
+		for (Enrolment E : enrolmentList) {
+			if (E.getStudentName() == deleteStudent) {
+				System.out.println("Student Name: " + E.getStudentName());
+				System.out.println("Course Code: " + E.getCourseCode());
+			}
+		}
+
+		String deleteConfirmation = Helper.readString("Confirm delete? (Y/N):");
+
+		if (deleteConfirmation == "Y") {
+			doDeleteEnrolment(enrolmentList, deleteStudent);
+			System.out.println("Enrolment Deleted!");
+		}
+
+	}
+
+	public static void doDeleteEnrolment(ArrayList<Enrolment> enrolmentList, String deleteStudent) {
+
+		for (int i = 0; i < enrolmentList.size(); i++) {
+			if (enrolmentList.get(i).getStudentName() == deleteStudent) {
+				enrolmentList.remove(i);
+			}
+		}
+	}
 	
 
-	}//end of all code
-
-
+}// end of all code

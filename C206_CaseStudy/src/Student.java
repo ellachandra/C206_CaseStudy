@@ -6,10 +6,10 @@ public class Student extends User{
 	private List<Attendance> attendanceRecords;
 	private String educationHistory; // jacky
 
-	public Student(String userId, String password, String name, int number, String email) {
+	public Student(String userId, String password, String name, int number, String email, String educationHistory) {
         super(userId,password, name, number, email);
         this.attendanceRecords = new ArrayList<>();
-        //this.educationHistory = EducationHistory; // jacky
+        this.educationHistory = educationHistory; // jacky
     }
 	
 	
@@ -54,8 +54,8 @@ public class Student extends User{
         }
     }
     
-   // public String getEducationHistory() {
-   // 	return educationHistory;
-    //}
+    public String getEducationHistory() {
+    	return educationHistory;
+    }
 
 }
