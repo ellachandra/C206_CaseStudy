@@ -17,14 +17,15 @@ public class C206_CaseStudyTest {
 	private Course c1;
 	private Course c2;
 	private Enrolment e1;
-	private Fee f1;
+	private Fee fee1;
+	private Fee fee2;
 	
 	private ArrayList<Student> students;
 	private ArrayList<Administrator> administrators;
 	private ArrayList<Teacher> teachers;
 	private ArrayList<Course> courseList;
 	private ArrayList<Enrolment> enrolmentList;
-	private ArrayList<Fee> FeeList;
+	private ArrayList<Fee> feeList;
 	
 	
 	public C206_CaseStudyTest() {
@@ -34,8 +35,8 @@ public class C206_CaseStudyTest {
 	@Before
 	public void setUp() throws Exception {
 		//prepare test data
-		s1 = new Student("student1", "student123", "Student 1", 81122334, "student1@example.com", "NA level");
-		s2 = new Student("student2", "student456", "Student 2", 81222334, "student2@example.com", "NA level");
+		s1 = new Student("student1", "student123", "Student 1", 81122334, "student1@example.com");
+		s2 = new Student("student2", "student456", "Student 2", 81222334, "student2@example.com");
 		a1 = new Administrator("admin1", "admin123", "Administrator 1", 91122334, "admin1@example.com");
 		a2 = new Administrator("admin2", "admin456", "Administrator 2", 92233445, "admin2@example.com");
 		t1 = new Teacher("teacher1", "teacher123", "Teacher 1", 81122334, "teacher1@example.com");
@@ -43,14 +44,17 @@ public class C206_CaseStudyTest {
 		c1 = new Course("CS101", "Java Corp", "The Journey of Java", "", 20, "Mon, Wed 10:00 AM - 11:30 AM");
 		c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "NA level", 40, "Tue, Thur 11:00 AM - 12:30 PM");
 		e1 = new Enrolment("Student 1", "CS101");
-		f1 = new Fee("A123","tuition fee","8/9/2023",100.60);
+		fee1 = new Fee("F1", "Type1", "2023-08-15", 100.0);
+	    fee2 = new Fee("F2", "Type2", "2023-08-30", 150.0);
+		
+		
 		
 		students = new ArrayList<Student>();
 		administrators = new ArrayList<Administrator>();
 		teachers = new ArrayList<Teacher>();
 		courseList = new ArrayList<Course>();
 		enrolmentList = new ArrayList<Enrolment>();
-		FeeList = new ArrayList<Fee>();
+		 feeList = new ArrayList<Fee>();
 	}
 
 
@@ -111,24 +115,21 @@ public class C206_CaseStudyTest {
 	}
 	
 	@Test
-	 public void testAddFee() {
-        ArrayList<Fee> feeList = new ArrayList<>();
-        Fee fee1 = new Fee("F1", "Type1", "2023-08-15", 100.0);
-        Fee fee2 = new Fee("F2", "Type2", "2023-08-30", 150.0);
+	 public void testAddFee() { //donovan
+        
+        // Item list is not null, so that can add a new item - boundary
+        assertNotNull("Check if there is a valid Fee arraylist to add to", feeList);
 
+        // Given an empty list, after adding 1 item, the size of the list is 1 - normal
+        // The item just added is the same as the first item of the list
         TuitionManagement.addFee(feeList, fee1);
+        assertEquals("Check that feeList arrayList size is 1,", 1, feeList.size());
+        assertSame("Check that Fee is added,", fee1, feeList.get(0));
 
-        assertEquals(1, feeList.size());
-        assertSame(fee1, feeList.get(0));
-
-        // Adding another fee with the same ID should not change the list
-        TuitionManagement.addFee(feeList, fee1);
-        assertEquals(1, feeList.size());
-
-        // Adding a fee with a different ID should increase the list size
+        // Add another item. Test if the size of the list is 2? - normal
+        // The item just added is the same as the second item of the list
         TuitionManagement.addFee(feeList, fee2);
-        assertEquals(2, feeList.size());
-        assertSame(fee2, feeList.get(1));
+        assertEquals("Test that Fee is added,", fee2, feeList.get(1));
     }
 		
 	
@@ -177,8 +178,8 @@ public class C206_CaseStudyTest {
 				
 				//test if the expected output string same as the list of Student retrieved from the SourceCentre	
 				allStudent = TuitionManagement.retrieveStudent(students);
-				testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student1", "Student 1", 81122334, "student1@example.com");
-				testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student2", "Student 2", 81222334, "student2@example.com");
+				testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20.2f%n", "student1", "Student 1", 81122334, "student1@example.com");
+				testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20%n", "student2", "Student 2", 81222334, "student2@example.com");
 				
 				assertEquals("Test that ViewStudent list", testOutput, allStudent);
 	}
@@ -213,6 +214,30 @@ public class C206_CaseStudyTest {
 
 	    assertEquals("Test that ViewCourse list", testOutput, allCourses);
 		
+	}
+	
+	@Test 
+	public void testRetrieveFee() { //donovan
+		 // Test if Item list is not null but empty - boundary
+	    assertNotNull("Test if there is valid fee arraylist to retrieve the item", feeList);
+
+	    // Test if the list of fees retrieved from the SourceCentre is empty - boundary
+	    String allfees = TuitionManagement.retrieveFee(feeList);
+	    String testOutput = "";
+	    // Test if the output is empty
+	    assertEquals("Test that nothing is displayed", testOutput, allfees);
+
+	    // Given an empty list, after adding 2 items, test if the size of the list is 2 - normal
+	    TuitionManagement.addFee(feeList,fee1);
+	    TuitionManagement.addFee(feeList,fee2);
+	    assertEquals("Test that Course arraylist size is 2", 2, feeList.size());
+
+	    // Test if the expected output string is the same as the list of fees retrieved from the SourceCentre
+	    allfees = TuitionManagement.retrieveFee(feeList);
+	    testOutput = String.format("%-12s\t %-20s\t %-16s\t %-10.2f%n","F1", "Type1", "2023-08-15", 100.0);
+	    testOutput += String.format("%-12s\t %-20s\t %-16s\t %-10.2f%n","F2", "Type2", "2023-08-30", 150.0);
+
+	    assertEquals("Test that ViewFee list", testOutput, allfees);
 	}
 	
 	@Test
@@ -312,6 +337,36 @@ public class C206_CaseStudyTest {
 
 	    assertEquals("Test that ViewCourse list", testOutput2, allCourses);
 	}
+	
+	@Test
+	public void testDeletefee(){
+		 // Test if Item list is not null but empty - boundary
+	    assertNotNull("Test if there is valid Fee arraylist to delete a Fee", feeList);
+
+	    // Test if the list of fees retrieved from the SourceCentre is the same as expected output
+	    String testOutput = "";
+	    String testOutput2 = "";
+	    feeList.add(fee1);
+	    feeList.add(fee2);
+	    String allfees = TuitionManagement.retrieveFee(feeList);
+	    testOutput = String.format("%-12s\t %-20s\t %-16s\t %-10.2f%n","F1", "Type1", "2023-08-15", 100.0);
+	    testOutput += String.format("%-12s\t %-20s\t %-16s\t %-10.2f%n","F2", "Type2", "2023-08-30", 150.0);
+
+	    // Test if the output is empty
+	    assertEquals("Test that the expected output string is same as the list of fees retrieved from the SourceCentre", testOutput, allfees);
+
+	    // Given a list, after deleting 1 item, test that the arraylist has -1 item
+	    TuitionManagement.deleteFee(feeList, fee2.getFeeID());
+	    assertEquals("Test that fee arraylist size is 1", 1, feeList.size());
+
+	    // Test if the expected output string same as the list of fees retrieved from the SourceCentre
+	    allfees = TuitionManagement.retrieveFee(feeList);
+
+	    testOutput2 += String.format("%-12s\t %-20s\t %-16s\t %-10.2f%n","F1", "Type1", "2023-08-15", 100.0);
+
+	    assertEquals("Test that Viewfee list", testOutput2, allfees);
+		
+	}
 
 	// ---------- Test Enrollment ----------------------------
 	
@@ -365,7 +420,17 @@ public class C206_CaseStudyTest {
 //		
 //		// test that output is empty when item is deleted 
 //		TuitionManagement.doDeleteEnrolment(enrolmentList, e1.getStudentName());
-//		allEnrolment = TuitionManagement.retrieveAllEnrolment(enrolmentList);
+//		allEnrolment = TuitionManagement.retr
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	ieveAllEnrolment(enrolmentList);
 //		testOutput = "";
 //		assertEquals("Test that output retrieveAllEnrolment output is empty as expected", testOutput, allEnrolment);
 //		
