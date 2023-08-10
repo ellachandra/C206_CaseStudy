@@ -306,11 +306,11 @@ public class TuitionManagement {
 						else if (optionA == ADMIN_OPTION_FEE) { //donovan
 							//code for Fee Management
 							int optionE = 0;
-							while (optionE != ADMIN_FEE_QUIT) {
+							while (optionE != ADMIN_FEE_QUIT) {//donovan
 								TuitionManagement.feeTypeMenu();
 								optionE = Helper.readInt("Enter an option > ");
 								
-								if(optionE == ADMIN_FEE_ADD) {
+								if(optionE == ADMIN_FEE_ADD) {//donovan
 									TuitionManagement.setHeader("ADD A NEW FEE");
 									
 									String FeeID = Helper.readString("Enter Fee ID > ");
@@ -328,7 +328,7 @@ public class TuitionManagement {
 									
 									
 									
-								}else if(optionE == ADMIN_FEE_VIEW){
+								}else if(optionE == ADMIN_FEE_VIEW){//donovan
 									TuitionManagement.setHeader("VIEW ALL FEE");
 									System.out.println("ALL FEES:");
 									Helper.line(120, "-");
@@ -336,7 +336,7 @@ public class TuitionManagement {
 									Helper.line(120, "-");
 									TuitionManagement.viewAllFee(Fees);
 									Helper.line(120,"-");
-								}else if(optionE == ADMIN_FEE_DELETE) {
+								}else if(optionE == ADMIN_FEE_DELETE) {//donovan
 									TuitionManagement.setHeader("DELETE EXISTING FEE");
 									String deleteFee = Helper.readString("Enter FeeID to delete > ");
 									
@@ -344,9 +344,9 @@ public class TuitionManagement {
 									
 									//print output
 									if (deleted) {
-										System.out.println("Fee ID" + deleteFee + "has been deleted");
+										System.out.println("Fee ID " + deleteFee + " has been deleted");
 									}else {
-										System.out.println("Fee ID" + deleteFee + "not found");
+										System.out.println("Fee ID " + deleteFee + " not found");
 									}
 								}
 								
@@ -535,7 +535,7 @@ public class TuitionManagement {
 		Helper.line(80, "-");
 	}
 
-	public static void feeTypeMenu() {
+	public static void feeTypeMenu() {//donovan
 		TuitionManagement.setHeader("FEE MANAGEMENT");
 		System.out.println("1. Add a new fee");
 		System.out.println("2. View all fee");
