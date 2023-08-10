@@ -489,7 +489,7 @@ public class TuitionManagement {
 
 	}
 
-	public static void setHeader(String header) {// jia an
+	public static void setHeader(String header) {// jiaan
 		Helper.line(80, "-");
 		System.out.println(header);
 		Helper.line(80, "-");

@@ -224,7 +224,7 @@ public class C206_CaseStudyTest {
 	}
 
 	@Test
-	public void testRetrieveFee() { // donovan
+	public void testRetrieveFee() { //donovan
 		// Test if Item list is not null but empty - boundary
 		assertNotNull("Test if there is valid fee arraylist to retrieve the item", feeList);
 
