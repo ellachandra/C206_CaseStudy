@@ -82,7 +82,7 @@ public class TuitionManagement {
 		courseList.add(c2);//ella
 		
 		ArrayList<Fee> Fees = new ArrayList<Fee>();
-		Fees.add(new Fee("tuition fee","8/9/2023",100.60));
+		Fees.add(new Fee("A123","tuition fee","8/9/2023",100.60));
 		
 		
 		
@@ -324,7 +324,7 @@ public class TuitionManagement {
 									Fee newFee = new Fee(FeeID,FeeType,DueDate,Amount);
 									
 									//add new fee to the arraylist
-									TuitionManagement.addfee(Fees, NewFee);
+									TuitionManagement.addFee(Fees, newFee);
 									
 									System.out.println("Fee Successfully added!");
 									
@@ -334,21 +334,21 @@ public class TuitionManagement {
 									TuitionManagement.setHeader("VIEW ALL FEE");
 									System.out.println("ALL FEES:");
 									Helper.line(120, "-");
-									System.out.println(String.format("%-10s %-15s %-20s\n", "FEE TYPE","DUE DATE","AMOUNT"));
+									System.out.println(String.format("%-12s %-20s %-16s %-10s", "FeeID","FEE TYPE","DUE DATE","AMOUNT"));
 									Helper.line(120, "-");
-									TuitionManagement.viewAllFee(students);
+									TuitionManagement.viewAllFee(Fees);
 									Helper.line(120,"-");
 								}else if(optionE == ADMIN_FEE_DELETE) {
 									TuitionManagement.setHeader("DELETE EXISTING FEE");
 									String deleteFee = Helper.readString("Enter FeeID to delete > ");
 									
-									boolean deleted = TuitionManagement.deleteFee(students,deleteFee);
+									boolean deleted = TuitionManagement.deleteFee(Fees,deleteFee);
 									
 									//print output
 									if (deleted) {
 										System.out.println("Fee ID" + deleteFee + "has been deleted");
 									}else {
-										System.out.println("Fee ID" + deletefee + "not found");
+										System.out.println("Fee ID" + deleteFee + "not found");
 									}
 								}
 								
@@ -702,7 +702,7 @@ public class TuitionManagement {
 	
 	public static void addFee(ArrayList<Fee> Fees, Fee FEE) { //donovan
 		Fee user;
-		for(int i = 0; i < FEE.size(); i++) {
+		for(int i = 0; i < Fees.size(); i++) {
 			user = Fees.get(i);
 			if (user.getFeeID().equalsIgnoreCase(FEE.getFeeID()) )
 				return;
@@ -722,7 +722,7 @@ public class TuitionManagement {
 			String duedate = fee.getDueDate();
 			double amount= fee.getAmount();
 
-			output += String.format("%-10s\t%-20s\t%-30s\t%-20.2f%n", FeeID, FeeType, duedate, amount);
+			output += String.format("%-12s\t %-20s\t %-16s\t %-10.2f%n", FeeID, FeeType, duedate, amount);
 		}
 		
 		return output;
