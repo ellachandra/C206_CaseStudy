@@ -75,9 +75,9 @@ public class TuitionManagement {
         students.add(new Student("student4", "studentabc", "Student 4", 81422334, "student4@example.com"));
         
 		ArrayList<Course> courseList = new ArrayList<Course>();
-		Course c1 = new Course("CS101", "Java Corp", "The Journey of Java", "", "Mon, Wed 10:00 AM - 11:30 AM");
+		Course c1 = new Course("CS101", "Java Corp", "The Journey of Java", "",20, "Mon, Wed 10:00 AM - 11:30 AM");
 		//added 1 more course to show eligibility example - ella
-		Course c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "Requires CS101", "Tue, Thur 11:00 AM - 12:30 PM");
+		Course c2 = new Course("CS102", "Java Corp 2", "Advanced journey of Java", "Requires CS101",40, "Tue, Thur 11:00 AM - 12:30 PM");
 		courseList.add(c1);
 		courseList.add(c2);//ella
 		
@@ -208,56 +208,55 @@ public class TuitionManagement {
 										String courseId = Helper.readString("Enter Course ID: ");
 										String courseName = Helper.readString("Enter Course Name: ");
 										String courseDescription = Helper.readString("Enter Course Description: ");
-										String courseEligibility = Helper.readString("Enter Course Eligibility Criteria: "); // added eligibility - ella
+										String courseEligibility = Helper.readString("Enter Course Eligibility Criteria: "); // added
+																																// eligibility
+																																// -
+																																// ella
+										int courseAvailability = Helper.readInt("Enter Course Availability: "); // jacky
 										String schedule = Helper.readString("Enter Course Schedule: ");
-
 										// Create a new Course object with user input
-										Course newCourse = new Course(courseId, courseName, courseDescription, courseEligibility, schedule);
-
+										Course newCourse = new Course(courseId, courseName, courseDescription,
+												courseEligibility, courseAvailability, schedule);
 										// Add the new course to the ArrayList
-										courseList.add(newCourse);
-
+										TuitionManagement.addCourse(courseList, newCourse);
 										// Print a success message
 										System.out.println("Course added successfully!");
-							
-									}else if(optionC == ADMIN_COURSE_VIEW) {
+									} else if(optionC == ADMIN_COURSE_VIEW) {
 										TuitionManagement.setHeader("VIEW ALL COURSE");
 										System.out.println("ALL COURSES:");
 										Helper.line(120, "-");
 										System.out.println("Course Course\tCourse Name\t\tDescription\t\t\tSchedule"); //need to add eligibility
 										Helper.line(120, "-");
-										for (Course course : courseList) {
-											String courseId = course.getCourseCode();
-											String courseName = course.getCourseTitle();
-											//add eligibility
-											String courseDescription = course.getCourseDesc();
-											String schedule = course.getSchedule();
-
-											System.out.printf("%-10s\t%-20s\t%-30s\t%-20s%n", courseId, courseName, courseDescription, schedule);
-										}
-										Helper.line(120, "-");
+//										for (Course course : courseList) {
+//										String courseId = course.getCourseCode();
+//										String courseName = course.getCourseTitle();
+//										String eligibility = course.getCourseEligibil();
+//										int availability = course.getCourseAvailability();
+//										String courseDescription = course.getCourseDesc();
+//										String schedule = course.getSchedule();
+//
+//										System.out.printf("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-15s%n", courseId,
+//												courseName, courseDescription, eligibility, availability, schedule);
+//										
+//										
+//										
+//									}
+									TuitionManagement.viewAllCourses(courseList);
+									Helper.line(180, "-");
 									}
 									else if(optionC == ADMIN_COURSE_DELETE) {
-										TuitionManagement.setHeader("VIEW ALL COURSE");
+										TuitionManagement.setHeader("DELETE ALL COURSE");
 										String courseIdToDelete = Helper.readString("Enter the Course ID to delete:");
 
 										// Delete the course with the given course ID
-										boolean courseDeleted = false;
-										for (int i = 0; i < courseList.size(); i++) {
-											Course course = courseList.get(i);
-											if (course.getCourseCode().equals(courseIdToDelete)) {
-												courseList.remove(i);
-												courseDeleted = true;
-												break;
-											}
-										}
+									    boolean courseDeleted = deleteCourse(courseList, courseIdToDelete);
 
 										// Print the result of the delete operation
-										if (courseDeleted) {
-											System.out.println("Course with ID " + courseIdToDelete + " has been deleted.");
-										} else {
-											System.out.println("Course with ID " + courseIdToDelete + " not found.");
-										}
+									    if (courseDeleted) {
+									        System.out.println("Course with ID " + courseIdToDelete + " has been deleted.");
+									    } else {
+									        System.out.println("Course with ID " + courseIdToDelete + " not found.");
+									    }
 									}
 							}
 							
@@ -593,6 +592,61 @@ public class TuitionManagement {
 		}
 		return output;
 	}
+
+	//Course stuff
+
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	public static void addCourse(ArrayList<Course> courseList, Course course) {
+		for (Course existingCourse : courseList) {
+			if (existingCourse.getCourseCode().equalsIgnoreCase(course.getCourseCode())) {
+				return; // Course with the same code already exists
+			}
+		}
+
+		if (course.getCourseCode().isEmpty() || course.getCourseTitle().isEmpty() || 
+			    course.getCourseDesc().isEmpty() ||  
+			    course.getCourseAvailability() <= 0 || course.getSchedule().isEmpty()) {
+			    return; // Course information is incomplete or invalid
+			}
+
+		courseList.add(course);
+	}
+	public static String retrieveCourses(ArrayList<Course> courseList) {
+	    String output = "";
+	    for (Course course : courseList) {
+	        String courseId = course.getCourseCode();
+	        String courseTitle = course.getCourseTitle();
+	        String courseDescription = course.getCourseDesc();
+	        String eligibility = course.getCourseEligibil();
+	        int availability = course.getCourseAvailability();
+	        String schedule = course.getSchedule();
+
+	        output += String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n",
+	                courseId, courseTitle, courseDescription, eligibility, availability, schedule);
+	    }
+	    return output;
+	}
+	public static void viewAllCourses(ArrayList<Course> courseList) {
+	    String output = retrieveCourses(courseList);
+	    System.out.println(output);
+	}
+
+	public static boolean deleteCourse(ArrayList<Course> courseList, String courseCodeToDelete) {
+	    boolean deleted = false;
+
+	    for (int i = 0; i < courseList.size(); i++) {
+	        Course course = courseList.get(i);
+	        if (course.getCourseCode().equals(courseCodeToDelete)) {
+	            courseList.remove(i);
+	            deleted = true;
+	            break;
+	        }
+	    }
+
+	    return deleted;
+	}
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	public static String retrieveStudent(ArrayList<Student> students) { //weile
 		String output = "";
