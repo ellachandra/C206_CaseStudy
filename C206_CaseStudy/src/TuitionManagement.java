@@ -13,6 +13,10 @@ import java.util.List;
 
 //ella has edited add, view and delete users
 public class TuitionManagement {
+	private static final int ADMIN_ENROLMENT_DELETE = 3;
+	private static final int ADMIN_ENROLMENT_VIEW = 2;
+	private static final int ADMIN_ENROLMENT_ADD = 1;
+	private static final int ADMIN_ENROLMENT_QUIT = 4;
 	private static final int ADMIN_OPTION_QUIT = 7;// jia an
 	private static final int ADMIN_OPTION_USER = 1;// jia an
 	private static final int ADMIN_OPTION_COURSE = 2;// jia an
@@ -354,15 +358,15 @@ public class TuitionManagement {
 						else if (optionA == ADMIN_OPTION_ENROLMENT) {
 							//code for Enrollment Management
 							int choice = 0;
-							while (choice != 4) {
+							while (choice != ADMIN_ENROLMENT_QUIT) {
 								TuitionManagement.enrolmentTypeMenu();
 								choice = Helper.readInt("Enter an option: ");
 
-								if (choice == 1) {
+								if (choice == ADMIN_ENROLMENT_ADD) {
 									addEnrolment(courseList, students, enrolmentList);
-								} else if (choice == 2) {
+								} else if (choice == ADMIN_ENROLMENT_VIEW) {
 									viewEnrolment(enrolmentList);
-								} else if (choice == 3) {
+								} else if (choice == ADMIN_ENROLMENT_DELETE) {
 									deleteEnrolment(enrolmentList);
 								} else {
 									System.out.println("Invalid Option!");
