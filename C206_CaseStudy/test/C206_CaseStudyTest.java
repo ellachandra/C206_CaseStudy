@@ -214,9 +214,9 @@ public class C206_CaseStudyTest {
 		// Test if the expected output string is the same as the list of courses
 		// retrieved from the SourceCentre
 		allCourses = TuitionManagement.retrieveCourses(courseList);
-		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n", "CS101", "Java Corp",
+		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s\t\t%-12d\t\t%-20s%n", "CS101", "Java Corp",
 				"The Journey of Java", "Programming experience", 20, "Mon, Wed 10:00 AM - 11:30 AM");
-		testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n", "CS102", "Java Corp 2",
+		testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s\t\t%-12d\t\t%-20s%n", "CS102", "Java Corp 2",
 				"Advanced journey of Java", "Java experience", 40, "Tue, Thur 11:00 AM - 12:30 PM");
 
 		assertEquals("Test that ViewCourse list", testOutput, allCourses);
@@ -338,9 +338,9 @@ public class C206_CaseStudyTest {
 		courseList.add(c1);
 		courseList.add(c2);
 		String allCourses = TuitionManagement.retrieveCourses(courseList);
-		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n", "CS101", "Java Corp",
+		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s\t\t%-12d\t\t%-20s%n", "CS101", "Java Corp",
 				"The Journey of Java", "Programming experience", 20, "Mon, Wed 10:00 AM - 11:30 AM");
-		testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n", "CS102", "Java Corp 2",
+		testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s\t\t%-12d\t\t%-20s%n", "CS102", "Java Corp 2",
 				"Advanced journey of Java", "Java experience", 40, "Tue, Thur 11:00 AM - 12:30 PM");
 
 		// Test if the output is empty
@@ -356,7 +356,7 @@ public class C206_CaseStudyTest {
 		// the SourceCentre
 		allCourses = TuitionManagement.retrieveCourses(courseList);
 
-		testOutput2 += String.format("%-10s\t%-20s\t%-30s\t%-20s\t%-12d\t%-20s%n", "CS101", "Java Corp",
+		testOutput2 += String.format("%-10s\t%-20s\t%-30s\t%-20s\t\t%-12d\t\t%-20s%n", "CS101", "Java Corp",
 				"The Journey of Java", "Programming experience", 20, "Mon, Wed 10:00 AM - 11:30 AM");
 
 		assertEquals("Test that ViewCourse list", testOutput2, allCourses);
