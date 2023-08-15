@@ -729,17 +729,16 @@ public class TuitionManagement {
 
 	}
 
-	public static void addFee(ArrayList<Fee> Fees, Fee FEE) { // donovan
-		Fee user;
-		for (int i = 0; i < Fees.size(); i++) {
-			user = Fees.get(i);
-			if (user.getFeeID().equalsIgnoreCase(FEE.getFeeID()))
-				return;
-		}
-		if ((FEE.getFeeID().isEmpty())) {
-			return;
-		}
-		Fees.add(FEE);
+	public static void addFee(ArrayList<Fee> fees, Fee newFee) {
+	    for (Fee fee : fees) {
+	        if (fee.getFeeID().equalsIgnoreCase(newFee.getFeeID())) {
+	            return; 
+	        }
+	    }
+	    if (newFee.getFeeID().isEmpty()) {
+	        return; 
+	    }
+	    fees.add(newFee);
 	}
 
 	public static String retrieveFee(ArrayList<Fee> Fees) { // donovan
