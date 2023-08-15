@@ -20,7 +20,7 @@ public class TuitionManagement {
 	private static final int ADMIN_OPTION_QUIT = 7;// jia an
 	private static final int ADMIN_OPTION_USER = 1;// jia an
 	private static final int ADMIN_OPTION_COURSE = 2;// jia an
-	private static final int ADMIN_OPTION_STUDENT = 3;// jia an
+	private static final int ADMIN_OPTION_STUDENT = 3;// wei le
 	private static final int ADMIN_OPTION_FEE = 4;// jia an
 	private static final int ADMIN_OPTION_ENROLMENT = 5;// jia an
 	private static final int ADMIN_OPTION_ATTENDANCE = 6; // jia an
@@ -258,7 +258,7 @@ public class TuitionManagement {
 							//code for Student Management
 							int optionD = 0;
 							while(optionD != ADMIN_STUDENT_QUIT) { //weile
-									TuitionManagement.studentTypeMenu();
+									studentTypeMenu();
 									optionD = Helper.readInt("Enter an option > ");
 						
 									if(optionD == ADMIN_STUDENT_ADD) { //weile
@@ -289,18 +289,18 @@ public class TuitionManagement {
 										TuitionManagement.viewAllStudent(students);
 										Helper.line(120, "-");
 									}
-									else if(optionD == ADMIN_COURSE_DELETE) { //weile
-										TuitionManagement.setHeader("DELETE EXISTING USER");
-										String deleteUser = Helper.readString("Enter studentID to delete: ");
+									else if(optionD == ADMIN_STUDENT_DELETE) { //weile
+										TuitionManagement.setHeader("DELETE EXISTING STUDENT");
+										String deleteStudent = Helper.readString("Enter studentID to delete: ");
 										
-										boolean deleted = TuitionManagement.deleteStudent(students, deleteUser);
+										boolean deleted = TuitionManagement.deleteStudent(students, deleteStudent);
 										
 
 										// Print the result of the delete operation
 										if (deleted) {
-											System.out.println("Course with ID " + deleteUser + " has been deleted.");
+											System.out.println("Course with ID " + deleteStudent + " has been deleted.");
 										} else {
-											System.out.println("Course with ID " + deleteUser + " not found.");
+											System.out.println("Course with ID " + deleteStudent + " not found.");
 										}
 									}
 							}
@@ -594,12 +594,14 @@ public class TuitionManagement {
 
 	public static void addStudent(ArrayList<Student> students, Student stud) { // weile
 		Student user;
+		String id = stud.getUserId();
+		String email = stud.getEmail();
 		for (int i = 0; i < students.size(); i++) {
 			user = students.get(i);
-			if (user.getUserId().equalsIgnoreCase(stud.getUserId()))
+			if (user.getUserId().equalsIgnoreCase(id))
 				return;
 		}
-		if ((stud.getUserId().isEmpty()) || (stud.getEmail().isEmpty())) {
+		if ((id.isEmpty()) || (email.isEmpty())) {
 			return;
 		}
 		students.add(stud);
@@ -671,7 +673,7 @@ public class TuitionManagement {
 			int studentNumber = student.getNumber();
 			String studentEmail = student.getEmail();
 
-			output += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", studentId, studentName, studentNumber,
+			output += String.format("%-15s\t%-18s\t%-15s\t%-15s%n", studentId, studentName, studentNumber,
 					studentEmail);
 		}
 
@@ -724,8 +726,8 @@ public class TuitionManagement {
 		boolean deleted = false;
 
 		for (int i = 0; i < students.size(); i++) {
-			Student s = students.get(i);
-			if (s.getUserId().equals(deleteUser)) { // check against list
+			String s = students.get(i).getUserId();
+			if (s.equals(deleteUser)) { // check against list
 				students.remove(i); // remove from list
 				deleted = true;
 				break;

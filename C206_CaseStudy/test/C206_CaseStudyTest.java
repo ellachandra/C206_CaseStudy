@@ -180,9 +180,9 @@ public class C206_CaseStudyTest {
 		// test if the expected output string same as the list of Student retrieved from
 		// the SourceCentre
 		allStudent = TuitionManagement.retrieveStudent(students);
-		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student1", "Student 1", 81122334,
+		testOutput = String.format("%-15s\t%-18s\t%-15s\t%-15s%n", "student1", "Student 1", 81122334,
 				"student1@example.com");
-		testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student2", "Student 2", 81222334,
+		testOutput += String.format("%-15s\t%-18s\t%-15s\t%-15s%n", "student2", "Student 2", 81222334,
 				"student2@example.com");
 
 		assertEquals("Test that ViewStudent list", testOutput, allStudent);
@@ -295,9 +295,9 @@ public class C206_CaseStudyTest {
 		TuitionManagement.addStudent(students, s1);
 		TuitionManagement.addStudent(students, s2);
 		String allStudent = TuitionManagement.retrieveStudent(students);
-		testOutput = String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student1", "Student 1", 81122334,
+		testOutput = String.format("%-15s\t%-18s\t%-15s\t%-15s%n", "student1", "Student 1", 81122334,
 				"student1@example.com");
-		testOutput += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student2", "Student 2", 81222334,
+		testOutput += String.format("%-15s\t%-18s\t%-15s\t%-15s%n", "student2", "Student 2", 81222334,
 				"student2@example.com");
 
 	
@@ -313,7 +313,7 @@ public class C206_CaseStudyTest {
 		// the SourceCentre
 		allStudent = TuitionManagement.retrieveStudent(students);
 
-		testOutput2 += String.format("%-10s\t%-20s\t%-30s\t%-20s%n", "student1", "Student 1", 81122334,
+		testOutput2 += String.format("%-15s\t%-18s\t%-15s\t%-15s%n", "student1", "Student 1", 81122334,
 				"student1@example.com");
 
 		assertEquals("Test that ViewStudent list", testOutput2, allStudent);
