@@ -566,13 +566,16 @@ public class TuitionManagement {
 	}
 
 	public static void addUser(ArrayList<Administrator> administrators, Administrator ad) {//ella
+		
 		Administrator user;
+		String userId = ad.getUserId();
+		String email = ad.getEmail();
 		for (int i = 0; i < administrators.size(); i++) {
 			user = administrators.get(i);
-			if (user.getUserId().equalsIgnoreCase(ad.getUserId()))
+			if (user.getUserId().equalsIgnoreCase(userId))
 				return;
 		}
-		if ((ad.getUserId().isEmpty()) || (ad.getEmail().isEmpty())) {
+		if ((userId.isEmpty()) || (email.isEmpty())) {
 			return;
 		}
 		administrators.add(ad);
@@ -704,8 +707,8 @@ public class TuitionManagement {
 		boolean deleted = false;
 
 		for (int i = 0; i < administrators.size(); i++) {
-			Administrator admin = administrators.get(i);
-			if (admin.getUserId().equals(deleteUser)) { // check against list
+			String admin = administrators.get(i).getUserId();
+			if (admin.equals(deleteUser)) { // check against list
 				administrators.remove(i); // remove from list
 				deleted = true;
 				break;
